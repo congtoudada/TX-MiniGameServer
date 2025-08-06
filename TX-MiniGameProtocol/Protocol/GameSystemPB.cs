@@ -46,7 +46,7 @@ public partial class RspJsonData : global::ProtoBuf.IExtensible
 }
 
 [global::ProtoBuf.ProtoContract()]
-public partial class UserData : global::ProtoBuf.IExtensible
+public partial class PlayerData : global::ProtoBuf.IExtensible
 {
     private global::ProtoBuf.IExtension __pbn__extensionData;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

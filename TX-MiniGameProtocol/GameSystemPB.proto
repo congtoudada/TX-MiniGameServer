@@ -15,7 +15,7 @@ message RspJsonData
     required string content = 1;
 }
 
-message UserData{
+message PlayerData{
     required int32 uid = 1;//区服唯一ID
     required string name = 2;//名字
     required int32 level = 3;//等级

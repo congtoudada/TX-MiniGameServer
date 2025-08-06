@@ -12,7 +12,7 @@ namespace MiniGameServer
 {
     public partial class MsgHandler
     {
-        [MsgHandle(Cmd.Ping)]
+        [GameMessage(Cmd.Ping)]
         public static void ReqPingHandle(MsgPack pack)
         {
             KcpLog.Log("Server Handle ReqPing!");

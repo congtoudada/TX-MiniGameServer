@@ -15,12 +15,12 @@ namespace MiniGameServer
         //acct-session
         private Dictionary<string, ServerSession> onLineAcctDic;
         //seesion-userdata
-        private Dictionary<ServerSession, UserData> onLineSessionDic;
+        private Dictionary<ServerSession, PlayerData> onLineSessionDic;
 
         public override void Init() {
             base.Init();
             onLineAcctDic = new Dictionary<string, ServerSession>();
-            onLineSessionDic = new Dictionary<ServerSession, UserData>();
+            onLineSessionDic = new Dictionary<ServerSession, PlayerData>();
 
             this.Log("CacheSvc Init Done.");
         }
@@ -33,7 +33,7 @@ namespace MiniGameServer
             return onLineAcctDic.ContainsKey(acct);
         }
 
-        public void AcctOnline(string acct, ServerSession session, UserData playerData) {
+        public void AcctOnline(string acct, ServerSession session, PlayerData playerData) {
             onLineAcctDic.Add(acct, session);
             onLineSessionDic.Add(session, playerData);
         }

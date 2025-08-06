@@ -47,7 +47,7 @@ namespace MiniGameServer {
 
             foreach (var method in methods)
             {
-                var attr = method.GetCustomAttribute<MsgHandleAttribute>();
+                var attr = method.GetCustomAttribute<GameMessageAttribute>();
                 if (attr != null)
                 {
                     var del = (MsgListener)Delegate.CreateDelegate(typeof(MsgListener), method);

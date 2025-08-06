@@ -11,14 +11,14 @@ using System;
 namespace MiniGameServer
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class MsgHandleAttribute : Attribute
+    public class GameMessageAttribute : Attribute
     {
         /// <summary>
         /// 协议号
         /// </summary>
         public readonly Cmd Cmd;
         
-        public MsgHandleAttribute(Cmd cmd)
+        public GameMessageAttribute(Cmd cmd)
         {
             Cmd = cmd;
         }

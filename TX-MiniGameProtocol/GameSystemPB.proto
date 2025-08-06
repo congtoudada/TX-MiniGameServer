@@ -1,0 +1,25 @@
+syntax = "proto2";
+
+// 所有协议以"req"或"rsp"开头
+message ReqPing{ }
+
+message RspPing{ }
+
+message ReqJsonData
+{
+    required string protoName = 1;  // 协议名
+    optional string content = 2;
+}
+
+message RspJsonData
+{
+    required string protoName = 1;  // 协议名
+    optional string content = 2;
+}
+
+message UserData{
+    required int32 uid = 1;//区服唯一ID
+    required string name = 2;//名字
+    required int32 level = 3;//等级
+    required int32 exp = 4;//当前经验值
+}

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>TX_MiniGameServer</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Kcp" Version="2.0.0" />
+    <PackageReference Include="protobuf-net" Version="3.0.62" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KCPNet\KCPNet.csproj" />
+    <ProjectReference Include="..\TX-MiniGameProtocol\TX-MiniGameProtocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="System\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PEUtils">
+      <HintPath>..\Libs\PEUtils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

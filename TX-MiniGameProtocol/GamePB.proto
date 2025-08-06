@@ -1,0 +1,31 @@
+syntax = "proto2";
+
+import "GamePlayPB.proto";
+import "GameSystemPB.proto";
+
+//=================数据包=================//
+message Pkg{
+  required Head head = 1;
+  optional Body body = 2;
+}
+
+//=================数据头=================//
+message Head{
+  required string protoName = 1;  //协议名(唯一)
+  required int32 seq = 2;  // 序列号
+  required Error error = 3;  // 错误码
+}
+
+//=================协议体=================//
+message Body{
+  optional ReqPing reqPing = 1;
+  optional RspPing rspPing = 2;
+  optional ReqJsonData reqJsonData = 3;
+  optional RspJsonData rspJsonData = 4;
+}
+
+//=================错误码=================//
+enum Error {
+  no_error = 0;
+}
+

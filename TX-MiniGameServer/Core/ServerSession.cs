@@ -1,0 +1,42 @@
+﻿/****************************************************
+  文件：ServerSession.cs
+  作者：聪头
+  邮箱：1322080797@qq.com
+  日期：2025年08月04日 16:50:07
+  功能：每个客户端连接对应一个Session
+*****************************************************/
+
+using System;
+using PENet;
+
+namespace MiniGameServer
+{
+    public class ServerSession : KcpSession<Pkg>
+    {
+        protected override void OnConnected()
+        {
+            KcpLog.ColorLog(KcpLogColor.Green, $"Client Online,Sid:{m_sid} {m_remotePoint}");
+        }
+        
+        protected override void OnReceiveMsg(Pkg msg)
+        {
+            if (msg == null)
+            {
+                KcpLog.ColorLog(KcpLogColor.Red, "Sid:{0} Receive null!", m_sid);
+                return;
+            }
+            KcpLog.ColorLog(KcpLogColor.Magenta, "Sid:{0}, RcvReq Name:{1}", m_sid, msg.Head.protoName);
+            NetSvc.Instance.AddMsgQue(this, msg);  // 由主线程NetSvc处理
+        }
+        
+        protected override void OnUpdate(DateTime now) 
+        {
+
+        }
+
+        protected override void OnDisConnected()
+        {
+            KcpLog.Warn("Client Offline, Sid:{0}", m_sid);
+        }
+    }
+}

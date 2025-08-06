@@ -7,11 +7,11 @@ namespace MiniGameServer
     {
         static void Main(string[] args)
         {
-            ServerDriver driver = new ServerDriver();
-            driver.Init();
+            ServerLauncher launcher = new ServerLauncher();
+            launcher.Init();
             
             while(true) {
-                driver.Update();
+                launcher.Update();
                 Thread.Sleep(10);
             }
         }

@@ -7,14 +7,12 @@ message RspPing{ }
 
 message ReqJsonData
 {
-    required string protoName = 1;  // 协议名
-    optional string content = 2;
+    required string content = 1;
 }
 
 message RspJsonData
 {
-    required string protoName = 1;  // 协议名
-    optional string content = 2;
+    required string content = 1;
 }
 
 message UserData{

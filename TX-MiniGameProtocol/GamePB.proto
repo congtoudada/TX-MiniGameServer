@@ -11,9 +11,9 @@ message Pkg{
 
 //=================数据头=================//
 message Head{
-  required string protoName = 1;  //协议名(唯一)
+  required CMD cmd = 1;  // 协议号
   required int32 seq = 2;  // 序列号
-  required Error error = 3;  // 错误码
+  required Result result = 3;  // 错误码
 }
 
 //=================协议体=================//
@@ -24,8 +24,13 @@ message Body{
   optional RspJsonData rspJsonData = 4;
 }
 
-//=================错误码=================//
-enum Error {
-  no_error = 0;
+//=================协议号=================//
+enum CMD {
+  Ping = 1;
+}
+
+//=================返回值=================//
+enum Result {
+  Success = 0;
 }
 

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MiniGameServer {
-    public class ServerDriver {
+    public class ServerLauncher {
         public void Init() {
             //日志
             LogConfig cfg = new LogConfig()
@@ -52,13 +52,12 @@ namespace MiniGameServer {
             // RoomSys.Instance.Update();
         }
 
-        ~ServerDriver()
+        ~ServerLauncher()
         {
             //业务
             // RoomSys.Instance.Update();
             // MatchSys.Instance.Update();
             // LoginSys.Instance.Update();
-            
             NetSvc.Instance.DeInit();
             TimerSvc.Instance.DeInit();
             CacheSvc.Instance.DeInit();

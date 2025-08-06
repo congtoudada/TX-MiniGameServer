@@ -21,21 +21,15 @@ namespace MiniGameServer
         
         protected override void OnReceiveMsg(Pkg msg)
         {
-            KcpLog.ColorLog(KcpLogColor.Magenta, "Sid:{0},RcvClient,Name:{1}", m_sid, msg.Head.protoName);
-            // Json协议
-            string protoName = msg.Head.protoName;
-            if (protoName == "RspJsonData")
+            KcpLog.ColorLog(KcpLogColor.Magenta, "Sid:{0},RcvClient,Cmd:{1}", m_sid, msg.Head.Cmd);
+            Cmd cmd = msg.Head.Cmd;
+            if (ClientMain.MsgListeners.ContainsKey(cmd))
             {
-                if (msg.Body.rspJsonData != null)
-                {
-                    protoName = msg.Body.rspJsonData.protoName;
-                }
+                ClientMain.MsgListeners[cmd]?.Invoke(new MsgPack(this, msg));
             }
-            protoName += "Handle";
-            // 普通协议
-            if (ClientMain.MsgListeners.ContainsKey(protoName))
+            else
             {
-                ClientMain.MsgListeners[protoName]?.Invoke(msg);
+                this.Warn($"Server Handler not found cmd: {cmd}");
             }
         }
         

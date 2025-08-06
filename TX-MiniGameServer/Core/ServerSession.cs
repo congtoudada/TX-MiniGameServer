@@ -3,7 +3,7 @@
   作者：聪头
   邮箱：1322080797@qq.com
   日期：2025年08月04日 16:50:07
-  功能：每个客户端连接对应一个Session
+  功能：每个客户端连接对应一个Session（子线程执行）
 *****************************************************/
 
 using System;
@@ -25,7 +25,7 @@ namespace MiniGameServer
                 KcpLog.ColorLog(KcpLogColor.Red, "Sid:{0} Receive null!", m_sid);
                 return;
             }
-            KcpLog.ColorLog(KcpLogColor.Magenta, "Sid:{0}, RcvReq Name:{1}", m_sid, msg.Head.protoName);
+            KcpLog.ColorLog(KcpLogColor.Magenta, "Sid:{0}, RcvReq Cmd:{1}", m_sid, msg.Head.Cmd);
             NetSvc.Instance.AddMsgQue(this, msg);  // 由主线程NetSvc处理
         }
         

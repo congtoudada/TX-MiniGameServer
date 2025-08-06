@@ -28,19 +28,8 @@ public partial class ReqJsonData : global::ProtoBuf.IExtensible
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
-    public string protoName { get; set; }
-
-    [global::ProtoBuf.ProtoMember(2, Name = @"content")]
-    [global::System.ComponentModel.DefaultValue("")]
-    public string Content
-    {
-        get { return __pbn__Content ?? ""; }
-        set { __pbn__Content = value; }
-    }
-    public bool ShouldSerializeContent() => __pbn__Content != null;
-    public void ResetContent() => __pbn__Content = null;
-    private string __pbn__Content;
+    [global::ProtoBuf.ProtoMember(1, Name = @"content", IsRequired = true)]
+    public string Content { get; set; }
 
 }
 
@@ -51,19 +40,8 @@ public partial class RspJsonData : global::ProtoBuf.IExtensible
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
-    public string protoName { get; set; }
-
-    [global::ProtoBuf.ProtoMember(2, Name = @"content")]
-    [global::System.ComponentModel.DefaultValue("")]
-    public string Content
-    {
-        get { return __pbn__Content ?? ""; }
-        set { __pbn__Content = value; }
-    }
-    public bool ShouldSerializeContent() => __pbn__Content != null;
-    public void ResetContent() => __pbn__Content = null;
-    private string __pbn__Content;
+    [global::ProtoBuf.ProtoMember(1, Name = @"content", IsRequired = true)]
+    public string Content { get; set; }
 
 }
 

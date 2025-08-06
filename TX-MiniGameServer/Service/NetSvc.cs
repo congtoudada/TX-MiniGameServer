@@ -19,21 +19,11 @@ using System.Reflection;
 using PEUtils;
 
 namespace MiniGameServer {
-    public class MsgPack {
-        public ServerSession Session;
-        private readonly Pkg _pkg;
-        public MsgPack(ServerSession session, Pkg pkg) {
-            this.Session = session;
-            this._pkg = pkg;
-        }
-        public Head Head => _pkg.Head;
-        public Body Body => _pkg.Body;
-    }
-
     public class NetSvc : Singleton<NetSvc> {
         public static readonly string PkgQueueLock = "PkgQueueLock";
-        private KcpServerDriver<ServerSession, Pkg> server = new KcpServerDriver<ServerSession, Pkg>();
-        private Queue<MsgPack> _msgPackQue = new Queue<MsgPack>();
+        private readonly KcpServerDriver<ServerSession, Pkg> _server = new KcpServerDriver<ServerSession, Pkg>();
+        private readonly Queue<MsgPack> _msgPackQue = new Queue<MsgPack>();
+        private Dictionary<Cmd, MsgListener> _msgListeners = new Dictionary<Cmd, MsgListener>();
 
         public override void Init() {
             base.Init();
@@ -45,9 +35,25 @@ namespace MiniGameServer {
             KcpLog.ColorLogFunc = (color, msg) => {
                 this.ColorLog((LogColor)color, msg);
             };
-
-            server.StartAsServer(ServerConfig.Ip, ServerConfig.Port);
+            RegisterMsgHandlers();  //注册回调函数
+            _server.StartAsServer(ServerConfig.Ip, ServerConfig.Port);
             this.Log("NetSvc Init Done.");
+        }
+        
+        private void RegisterMsgHandlers()
+        {
+            var handlerType = typeof(MsgHandler);  // 定义消息处理函数的类
+            var methods = handlerType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+            foreach (var method in methods)
+            {
+                var attr = method.GetCustomAttribute<MsgHandleAttribute>();
+                if (attr != null)
+                {
+                    var del = (MsgListener)Delegate.CreateDelegate(typeof(MsgListener), method);
+                    _msgListeners[attr.Cmd] = del;
+                }
+            }
         }
         
         // 其他线程添加消息
@@ -58,11 +64,12 @@ namespace MiniGameServer {
         }
         
         // 主线程处理消息
-        public override void Update() {
+        public override void Update()
+        {
             base.Update();
-
-            if(_msgPackQue.Count > 0) {
-                lock(PkgQueueLock) {
+            lock (PkgQueueLock)
+            {
+                if(_msgPackQue.Count > 0) {
                     MsgPack msg = _msgPackQue.Dequeue();
                     HandoutMsg(msg);
                 }
@@ -74,27 +81,38 @@ namespace MiniGameServer {
         {
             try
             {
-                // 分发消息
-                string methodName = pack.Head.protoName;
-                MethodInfo mi = null;
-                if (methodName == "ReqJsonData")  // Json协议需嵌套处理
+                Cmd cmd = pack.Head.Cmd;
+                if (_msgListeners.ContainsKey(cmd))
                 {
-                    methodName = pack.Body.reqJsonData.protoName;
-                }
-                methodName += "Handle";
-                KcpLog.Log($"Receive proto: {methodName}:{pack.Session.GetRemotePoint()}");
-                mi = typeof(MsgHandler).GetMethod(methodName); // 回调规则：协议名+Handle
-                // Json协议解析后触发
-                if (mi != null)
-                {
-                    object[] o = { pack };
-                    mi.Invoke(null, o);
+                    _msgListeners[cmd]?.Invoke(pack);
                 }
                 else
                 {
-                    this.Warn("[ 服务器 ] OnReceiveData Invoke fail " + methodName);
-                    return;
+                    this.Warn($"Server Handler not found cmd: {cmd}");
                 }
+                #region 反射分发（弃用）
+                // // 分发消息
+                // string methodName = pack.Head.protoName;
+                // MethodInfo mi = null;
+                // if (methodName == "ReqJsonData")  // Json协议需嵌套处理
+                // {
+                //     methodName = pack.Body.reqJsonData.protoName;
+                // }
+                // methodName += "Handle";
+                // KcpLog.Log($"Receive proto: {methodName}:{pack.Session.GetRemotePoint()}");
+                // mi = typeof(MsgHandler).GetMethod(methodName); // 回调规则：协议名+Handle
+                // // Json协议解析后触发
+                // if (mi != null)
+                // {
+                //     object[] o = { pack };
+                //     mi.Invoke(null, o);
+                // }
+                // else
+                // {
+                //     this.Warn("[ 服务器 ] OnReceiveData Invoke fail " + methodName);
+                //     return;
+                // }
+                #endregion
             }
             catch (Exception e)
             {

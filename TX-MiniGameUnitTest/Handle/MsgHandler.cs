@@ -13,12 +13,9 @@ namespace MiniGameServer
     public partial class MsgHandler
     {
         [MsgHandle(Cmd.Ping)]
-        public static void ReqPingHandle(MsgPack pack)
+        public static void RspPingHandle(MsgPack pack)
         {
-            KcpLog.Log("Server Handle ReqPing!");
-            pack.Session.SendMsg(new Pkg() {
-                Head = new Head { Cmd = Cmd.Ping }
-            });
+            KcpLog.Log("Client Handle RspPing!");
         }
     }
 

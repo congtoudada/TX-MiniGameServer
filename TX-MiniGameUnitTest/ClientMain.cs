@@ -8,31 +8,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using PENet;
 
 namespace MiniGameServer
 {
-    //消息类型委托
-    public delegate void MsgListener(Pkg pkg);
+
     
     public class ClientMain
     {
         static KcpClientDriver<ClientSession, Pkg> client;
         static Task<bool> checkTask = null;
-        public static Dictionary<string, MsgListener> MsgListeners = new Dictionary<string, MsgListener>();
+        public static Dictionary<Cmd, MsgListener> MsgListeners = new Dictionary<Cmd, MsgListener>();
         static void Main(string[] args)
         {
             client = new KcpClientDriver<ClientSession, Pkg>();
             client.StartAsClient(ServerConfig.Ip, ServerConfig.Port);
+            RegisterMsgHandlers();
             checkTask = client.ConnectServer(200, 5000);
             Task.Run(ConnectCheck);
-            
-            //注册回调
-            MsgListeners.Add(nameof(RspPing)+"Handle", pkg =>
-            {
-                KcpLog.Log($"Client Handle Rsp: {pkg.Head.protoName}");
-            });
             
             while(true) {
                 string ipt = Console.ReadLine();
@@ -73,12 +68,29 @@ namespace MiniGameServer
                 }
             }
         }
+        
+        
+        private static void RegisterMsgHandlers()
+        {
+            var handlerType = typeof(MsgHandler);  // 定义消息处理函数的类
+            var methods = handlerType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+            foreach (var method in methods)
+            {
+                var attr = method.GetCustomAttribute<MsgHandleAttribute>();
+                if (attr != null)
+                {
+                    var del = (MsgListener)Delegate.CreateDelegate(typeof(MsgListener), method);
+                    MsgListeners[attr.Cmd] = del;
+                }
+            }
+        }
 
         static async void SendPingMsg() {
             while(true) {
                 if(client != null && client.clientSession != null) {
                     client.clientSession.SendMsg(new Pkg() {
-                        Head = new Head { protoName = nameof(ReqPing) }
+                        Head = new Head { Cmd = Cmd.Ping }
                     });
                     KcpLog.ColorLog(KcpLogColor.Green, "Client Send Ping Message.");
                 }

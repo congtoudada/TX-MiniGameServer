@@ -75,7 +75,7 @@
   <ItemGroup>
     <Compile Include="ClientMain.cs" />
     <Compile Include="ClientSession.cs" />
-    <Compile Include="KcpClientExtension.cs" />
+    <Compile Include="Handle\MsgHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

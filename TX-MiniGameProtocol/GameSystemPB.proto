@@ -1,23 +1,38 @@
 syntax = "proto2";
 
 // 所有协议以"req"或"rsp"开头
-message ReqPing{ }
+message ReqPing
+{
+    required int64 timestamp = 1;  // 请求时间戳
+}
 
-message RspPing{ }
+message RspPing
+{
+    required int64 timestamp = 1;  // 请求时间戳
+}
 
 message ReqJsonData
 {
-    required string content = 1;
+    required string content = 1;  // 请求json
 }
 
 message RspJsonData
 {
-    required string content = 1;
+    required string content = 1;  // 响应json
 }
 
-message PlayerData{
-    required int32 uid = 1;//区服唯一ID
-    required string name = 2;//名字
-    required int32 level = 3;//等级
-    required int32 exp = 4;//当前经验值
+message ReqLogin
+{
+    required string nickname = 1;  // 请求昵称
+}
+
+message RspLogin
+{
+    required string nickname = 1;  // 合法昵称
+}
+
+message PlayerData {
+    required int32 uid = 1; //UID(首次游戏为0，唯一)
+    required string nickName = 2; //名字(唯一)
+    // TODO:简化项目，所有数据由用户本地保存
 }

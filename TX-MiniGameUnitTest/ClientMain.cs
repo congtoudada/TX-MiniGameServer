@@ -24,7 +24,7 @@ namespace MiniGameServer
         static void Main(string[] args)
         {
             client = new KcpClientDriver<ClientSession, Pkg>();
-            client.StartAsClient(ServerConfig.Ip, ServerConfig.Port);
+            client.StartAsClient(CommonConfig.Ip, CommonConfig.Port);
             RegisterMsgHandlers();
             checkTask = client.ConnectServer(200, 5000);
             Task.Run(ConnectCheck);
@@ -88,8 +88,8 @@ namespace MiniGameServer
 
         static async void SendPingMsg() {
             while(true) {
-                if(client != null && client.clientSession != null) {
-                    client.clientSession.SendMsg(new Pkg() {
+                if(client != null && client.ClientSession != null) {
+                    client.ClientSession.SendMsg(new Pkg() {
                         Head = new Head { Cmd = Cmd.Ping }
                     });
                     KcpLog.ColorLog(KcpLogColor.Green, "Client Send Ping Message.");

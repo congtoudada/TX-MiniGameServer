@@ -16,18 +16,23 @@ using System;
 using PENet;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using PEUtils;
 
 namespace MiniGameServer {
     public class NetSvc : Singleton<NetSvc> {
         public static readonly string PkgQueueLock = "PkgQueueLock";
-        private readonly KcpServerDriver<ServerSession, Pkg> _server = new KcpServerDriver<ServerSession, Pkg>();
+        public KcpServerDriver<ServerSession, Pkg> ServerDriver { get; private set; } = new KcpServerDriver<ServerSession, Pkg>();
         private readonly Queue<MsgPack> _msgPackQue = new Queue<MsgPack>();
         private Dictionary<Cmd, MsgListener> _msgListeners = new Dictionary<Cmd, MsgListener>();
-
+        private List<EventPack> _eventListeners = new List<EventPack>();
+        private CancellationTokenSource cts;
+        
         public override void Init() {
             base.Init();
             _msgPackQue.Clear();
+            cts = new CancellationTokenSource();
 
             KcpLog.LogFunc = this.Log;
             KcpLog.WarnFunc = this.Warn;
@@ -35,17 +40,34 @@ namespace MiniGameServer {
             KcpLog.ColorLogFunc = (color, msg) => {
                 this.ColorLog((LogColor)color, msg);
             };
-            RegisterMsgHandlers();  //注册回调函数
-            _server.StartAsServer(ServerConfig.Ip, ServerConfig.Port);
+            RegisterHandlers();  //注册回调函数
+            ServerDriver.StartAsServer(CommonConfig.InnerIp, CommonConfig.Port);
+            Task.Run(DoTimer, cts.Token);
             this.Log("NetSvc Init Done.");
         }
         
-        private void RegisterMsgHandlers()
+        private void RegisterHandlers()
         {
-            var handlerType = typeof(MsgHandler);  // 定义消息处理函数的类
-            var methods = handlerType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            // 事件回调注册
+            var handlerType1 = typeof(EventHandler);
+            var methods1 = handlerType1.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 
-            foreach (var method in methods)
+            foreach (var method in methods1)
+            {
+                var attr = method.GetCustomAttribute<EventMessageAttribute>();
+                if (attr != null)
+                {
+                    var del = (Action)Delegate.CreateDelegate(typeof(Action), method);
+                    _eventListeners.Add(new EventPack(del, attr.Interval, attr.Priority));
+                }
+            }
+            _eventListeners.Sort();
+            
+            // 消息回调注册
+            var handlerType2 = typeof(MsgHandler);
+            var methods2 = handlerType2.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+            foreach (var method in methods2)
             {
                 var attr = method.GetCustomAttribute<GameMessageAttribute>();
                 if (attr != null)
@@ -63,6 +85,20 @@ namespace MiniGameServer {
             }
         }
         
+        //获得时间戳
+        public static long GetTimeStamp(bool millisecond = true)
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            if (millisecond)
+            {
+                return Convert.ToInt64(ts.TotalMilliseconds);
+            }
+            else
+            {
+                return Convert.ToInt64(ts.TotalSeconds);
+            }
+        }
+        
         // 主线程处理消息
         public override void Update()
         {
@@ -72,6 +108,11 @@ namespace MiniGameServer {
                 if(_msgPackQue.Count > 0) {
                     MsgPack msg = _msgPackQue.Dequeue();
                     HandoutMsg(msg);
+                }
+
+                if (_msgPackQue.Count > 10)
+                {
+                    this.Warn("Too Many Server Msg! Please Increase Tick!");
                 }
             }
         }
@@ -118,6 +159,25 @@ namespace MiniGameServer {
             {
                 this.Error($"[Exception] {e.GetType().Name}: {e.Message}");
                 this.Error($"[StackTrace] {e.StackTrace ?? "No stack trace available"}");
+            }
+        }
+        
+        //定时回调线程
+        private async Task DoTimer()
+        {
+            this.Log("NetSvc Do Timer Start.");
+            while (cts != null && !cts.IsCancellationRequested)
+            {
+                long now = GetTimeStamp();
+                foreach (var item in _eventListeners)
+                {
+                    if (now - item.LastTime > item.Interval)
+                    {
+                        item.Callback();
+                        item.LastTime = now;
+                    }
+                }
+                await Task.Delay(ServerConfig.EventHandleFps, cts.Token);  // 约30fps
             }
         }
     }

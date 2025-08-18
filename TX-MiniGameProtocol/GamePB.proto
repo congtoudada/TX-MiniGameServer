@@ -11,9 +11,10 @@ message Pkg{
 
 //=================数据头=================//
 message Head{
-  required CMD cmd = 1;  // 协议号
-  required int32 seq = 2;  // 序列号
-  required Result result = 3;  // 错误码
+  required int64 uid = 1;  // uid
+  required CMD cmd = 2;  // 协议号
+  required int64 seq = 3;  // 序列号
+  required Result result = 4;  // 错误码
 }
 
 //=================协议体=================//
@@ -22,15 +23,22 @@ message Body{
   optional RspPing rspPing = 2;
   optional ReqJsonData reqJsonData = 3;
   optional RspJsonData rspJsonData = 4;
+  optional ReqLogin reqLoginData = 5;
+  optional RspLogin rspLoginData = 6;
 }
 
 //=================协议号=================//
 enum CMD {
   Ping = 1;
+  Login = 2;
 }
 
 //=================返回值=================//
 enum Result {
   Success = 0;
+  //=================系统从10000开始=================//
+  HasBeenRegistered = 10001;
+  HasOnline = 10002;
+  //=================玩法从20000开始=================//
 }
 

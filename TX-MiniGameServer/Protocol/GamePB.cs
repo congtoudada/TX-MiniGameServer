@@ -25,13 +25,16 @@ public partial class Head : global::ProtoBuf.IExtensible
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-    [global::ProtoBuf.ProtoMember(1, Name = @"cmd", IsRequired = true)]
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"cmd", IsRequired = true)]
     public Cmd Cmd { get; set; } = Cmd.Ping;
 
-    [global::ProtoBuf.ProtoMember(2, Name = @"seq", IsRequired = true)]
-    public int Seq { get; set; }
+    [global::ProtoBuf.ProtoMember(3, Name = @"seq", IsRequired = true)]
+    public long Seq { get; set; }
 
-    [global::ProtoBuf.ProtoMember(3, Name = @"result", IsRequired = true)]
+    [global::ProtoBuf.ProtoMember(4, Name = @"result", IsRequired = true)]
     public Result Result { get; set; }
 
 }
@@ -55,18 +58,27 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(4)]
     public RspJsonData rspJsonData { get; set; }
 
+    [global::ProtoBuf.ProtoMember(5)]
+    public ReqLogin reqLoginData { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6)]
+    public RspLogin rspLoginData { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract(Name = @"CMD")]
 public enum Cmd
 {
     Ping = 1,
+    Login = 2,
 }
 
 [global::ProtoBuf.ProtoContract()]
 public enum Result
 {
     Success = 0,
+    HasBeenRegistered = 10001,
+    HasOnline = 10002,
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

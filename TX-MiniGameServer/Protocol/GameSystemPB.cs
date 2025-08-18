@@ -10,6 +10,9 @@ public partial class ReqPing : global::ProtoBuf.IExtensible
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+    [global::ProtoBuf.ProtoMember(1, Name = @"timestamp", IsRequired = true)]
+    public long Timestamp { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -18,6 +21,9 @@ public partial class RspPing : global::ProtoBuf.IExtensible
     private global::ProtoBuf.IExtension __pbn__extensionData;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"timestamp", IsRequired = true)]
+    public long Timestamp { get; set; }
 
 }
 
@@ -46,6 +52,30 @@ public partial class RspJsonData : global::ProtoBuf.IExtensible
 }
 
 [global::ProtoBuf.ProtoContract()]
+public partial class ReqLogin : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"nickname", IsRequired = true)]
+    public string Nickname { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspLogin : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"nickname", IsRequired = true)]
+    public string Nickname { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
 public partial class PlayerData : global::ProtoBuf.IExtensible
 {
     private global::ProtoBuf.IExtension __pbn__extensionData;
@@ -55,14 +85,8 @@ public partial class PlayerData : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
     public int Uid { get; set; }
 
-    [global::ProtoBuf.ProtoMember(2, Name = @"name", IsRequired = true)]
-    public string Name { get; set; }
-
-    [global::ProtoBuf.ProtoMember(3, Name = @"level", IsRequired = true)]
-    public int Level { get; set; }
-
-    [global::ProtoBuf.ProtoMember(4, Name = @"exp", IsRequired = true)]
-    public int Exp { get; set; }
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public string nickName { get; set; }
 
 }
 

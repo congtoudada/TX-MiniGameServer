@@ -13,8 +13,10 @@
 *************************************************/
 
 namespace MiniGameServer {
-    public class ServerConfig {
-        public const string Ip = "127.0.0.1";
+    public static class CommonConfig {
+        public const string Ip = "111.229.199.15";
+        public const string InnerIp = "10.0.12.9";
         public const int Port = 17666;
+        public const int ReqPingInterval = 30 * 1000;  // 30s 心跳发送频率
     }
 }

@@ -9,10 +9,9 @@ namespace MiniGameServer
         {
             ServerLauncher launcher = new ServerLauncher();
             launcher.Init();
-            
             while(true) {
                 launcher.Update();
-                Thread.Sleep(10);
+                Thread.Sleep(ServerConfig.Tick);
             }
         }
     }

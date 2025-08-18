@@ -80,6 +80,7 @@ namespace PENet {
             }
         }
         public void CloseSession() {
+            // KcpLog.Log($"Session Close! sid: {m_sid}");
             cts.Cancel();
             OnDisConnected();
 
@@ -100,26 +101,37 @@ namespace PENet {
         /// 对kcp解析后的数据进行使用
         /// </summary>
         async void Update() {
-            try {
-                while(true) {
+            try
+            {
+                while (true)
+                {
                     DateTime now = DateTime.UtcNow;
                     OnUpdate(now);
-                    if(ct.IsCancellationRequested) {
+                    if (ct.IsCancellationRequested)
+                    {
                         KcpLog.ColorLog(KcpLogColor.Cyan, "SessionUpdate Task is Cancelled.");
                         break;
                     }
-                    else {
+                    else
+                    {
                         m_kcp.Update(now);
                         int len;
-                        while((len = m_kcp.PeekSize()) > 0) {
+                        while ((len = m_kcp.PeekSize()) > 0)
+                        {
                             var buffer = new byte[len];
-                            if(m_kcp.Recv(buffer) >= 0) {
+                            if (m_kcp.Recv(buffer) >= 0)
+                            {
                                 m_handle.Receive(buffer);
                             }
                         }
+
                         await Task.Delay(10, ct);
                     }
                 }
+            }
+            catch (TaskCanceledException tce)
+            {
+                
             }
             catch(Exception e) {
                 KcpLog.Warn("Session Update Exception:{0}", e.ToString());

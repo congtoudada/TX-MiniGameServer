@@ -21,15 +21,12 @@ namespace PENet
     {
         UdpClient udp;
         IPEndPoint remotePoint;
-        
         private CancellationTokenSource cts;
-        private CancellationToken ct;
         
-        public T clientSession;
+        public T ClientSession { get; private set; }
         
         public KcpClientDriver() {
             cts = new CancellationTokenSource();
-            ct = cts.Token;
         }
         
         /// <summary>
@@ -44,7 +41,7 @@ namespace PENet
             }
             remotePoint = new IPEndPoint(IPAddress.Parse(ip), port);
             KcpLog.ColorLog(KcpLogColor.Green, "Client Start...");
-            Task.Run(ClientReceive, ct);  // 客户端接收数据循环
+            Task.Run(ClientReceive, cts.Token);  // 客户端接收数据循环
         }
         /// <summary>
         /// 连接服务器
@@ -59,7 +56,7 @@ namespace PENet
                 while(true) {
                     await Task.Delay(interval);
                     checkTimes += interval;
-                    if(clientSession != null && clientSession.IsConnected()) {
+                    if(ClientSession != null && ClientSession.IsConnected()) {
                         return true;
                     }
                     else {
@@ -79,7 +76,7 @@ namespace PENet
             UdpReceiveResult result;
             while(true) {
                 try {
-                    if(ct.IsCancellationRequested) {
+                    if(cts.Token.IsCancellationRequested) {
                         KcpLog.ColorLog(KcpLogColor.Cyan, "ClientReceive Task is Cancelled.");
                         break;
                     }
@@ -89,7 +86,7 @@ namespace PENet
                         uint sid = BitConverter.ToUInt32(result.Buffer, 0);
                         if(sid == 0) {
                             //sid 数据
-                            if(clientSession != null && clientSession.IsConnected()) {
+                            if(ClientSession != null && ClientSession.IsConnected()) {
                                 //已经建立连接，初始化完成了，收到了多的sid,直接丢弃。
                                 KcpLog.Warn("Client is Init Done,Sid Surplus.");
                             }
@@ -99,15 +96,15 @@ namespace PENet
                                 KcpLog.ColorLog(KcpLogColor.Green, "UDP Request Conv Sid:{0}", sid);
 
                                 //会话初始化
-                                clientSession = new T();
-                                clientSession.InitSession(sid, SendUDPMsg, remotePoint);
-                                clientSession.OnSessionClose = OnClientSessionClose;
+                                ClientSession = new T();
+                                ClientSession.InitSession(sid, SendUDPMsg, remotePoint);
+                                ClientSession.OnSessionClose = OnClientSessionClose;
                             }
                         }
                         else {
                             //处理业务逻辑(把远端数据传入kcp)
-                            if(clientSession != null && clientSession.IsConnected()) {
-                                clientSession.ReceiveData(result.Buffer);
+                            if(ClientSession != null && ClientSession.IsConnected()) {
+                                ClientSession.ReceiveData(result.Buffer);
                             }
                             else { 
                                 //没初始化且sid!=0，数据消息提前到了，直接丢弃消息，直到初
@@ -142,8 +139,8 @@ namespace PENet
         }
         
         public void CloseClient() {
-            if(clientSession != null) {
-                clientSession.CloseSession();
+            if(ClientSession != null) {
+                ClientSession.CloseSession();
             }
         }
     }

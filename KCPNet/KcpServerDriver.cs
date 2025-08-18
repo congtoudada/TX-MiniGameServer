@@ -24,33 +24,29 @@ namespace PENet
         IPEndPoint remotePoint;
         
         private CancellationTokenSource cts;
-        private CancellationToken ct;
         
         // 客户端Session字典
-        private Dictionary<uint, T> sessionDic = null;
+        public Dictionary<uint, T> SessionDic { get; private set; } = new Dictionary<uint, T>();
         
         public KcpServerDriver() {
             cts = new CancellationTokenSource();
-            ct = cts.Token;
         }
         
         public void StartAsServer(string ip, int port) {
-            sessionDic = new Dictionary<uint, T>();
-
             udp = new UdpClient(new IPEndPoint(IPAddress.Parse(ip), port));
             if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 udp.Client.IOControl((IOControlCode)(-1744830452), new byte[] { 0, 0, 0, 0 }, null);
             }
             remotePoint = new IPEndPoint(IPAddress.Parse(ip), port);
             KcpLog.ColorLog(KcpLogColor.Green, "Server Start...");
-            Task.Run(ServerReceive, ct);
+            Task.Run(ServerReceive, cts.Token);
         }
         
         async void ServerReceive() {
             UdpReceiveResult result;
             while(true) {
                 try {
-                    if(ct.IsCancellationRequested) {
+                    if(cts.Token.IsCancellationRequested) {
                         KcpLog.ColorLog(KcpLogColor.Cyan, "SeverReceive Task is Cancelled.");
                         break;
                     }
@@ -67,17 +63,17 @@ namespace PENet
                     }
                     else {
                         // 为新连接建立Session
-                        if(!sessionDic.TryGetValue(sid, out T session)) {
+                        if(!SessionDic.TryGetValue(sid, out T session)) {
                             // KcpLog.ColorLog(KcpLogColor.Magenta, $"Create Session! sid: {sid} remote:{result.RemoteEndPoint}");
                             session = new T();
                             session.InitSession(sid, SendUDPMsg, result.RemoteEndPoint);
                             session.OnSessionClose = OnServerSessionClose;
-                            lock(sessionDic) {
-                                sessionDic.Add(sid, session);
+                            lock(SessionDic) {
+                                SessionDic.Add(sid, session);
                             }
                         }
                         else {
-                            session = sessionDic[sid];
+                            session = SessionDic[sid];
                         }
                         session.ReceiveData(result.Buffer);
                     }
@@ -89,21 +85,21 @@ namespace PENet
         }
         
         void OnServerSessionClose(uint sid) {
-            if(sessionDic.ContainsKey(sid)) {
-                lock(sessionDic) {
-                    sessionDic.Remove(sid);
-                    KcpLog.Warn("Session:{0} remove from sessionDic.", sid);
+            if(SessionDic.ContainsKey(sid)) {
+                lock(SessionDic) {
+                    SessionDic.Remove(sid);
+                    KcpLog.Warn("Session:{0} remove from SessionDic.", sid);
                 }
             }
             else {
-                KcpLog.Error("Session:{0} cannot find in sessionDic", sid);
+                KcpLog.Error("Session:{0} cannot find in SessionDic", sid);
             }
         }
         public void CloseServer() {
-            foreach(var item in sessionDic) {
+            foreach(var item in SessionDic) {
                 item.Value.CloseSession();
             }
-            sessionDic = null;
+            SessionDic = null;
 
             if(udp != null) {
                 udp.Close();
@@ -119,19 +115,19 @@ namespace PENet
         }
         public void BroadCastMsg(K msg) {
             byte[] bytes = KcpTool.Serialize<K>(msg);
-            foreach(var item in sessionDic) {
+            foreach(var item in SessionDic) {
                 item.Value.SendMsg(bytes);
             }
         }
         private uint sid = 0;
         public uint GenerateUniqueSessionID() {
-            lock(sessionDic) {
+            lock(SessionDic) {
                 while(true) {
                     ++sid;
                     if(sid == uint.MaxValue) {
                         sid = 1;
                     }
-                    if(!sessionDic.ContainsKey(sid)) {
+                    if(!SessionDic.ContainsKey(sid)) {
                         break;
                     }
                 }

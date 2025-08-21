@@ -21,76 +21,93 @@ namespace MiniGameServer
             }
         }
         
-        // #region Equip
-        // [GameMessage(Cmd.Equip)]
-        // public static void ReqEquipHandle(MsgPack pack)
-        // {
-        //     // 准备
-        //     long uid = pack.GetUid();
-        //     ReqEquip req = pack.Body.reqEquip;
-        //     var data = RoomSvc.Instance.GetPlayer(uid);
-        //     // 记录
-        //     data.WeaponTypes = req.Weapons;
-        //     // 广播
-        //     Pkg pkg = new Pkg()
-        //     {
-        //         Head = new Head()
-        //         {
-        //             Uid = uid,
-        //             Cmd = Cmd.Equip,
-        //             Result = Result.Success
-        //         },
-        //         Body = new Body()
-        //         {
-        //             rspEquip = new RspEquip()
-        //             {
-        //                 Uid = uid,
-        //             }
-        //         }
-        //     };
-        //     pkg.Body.rspEquip.Weapons.AddRange(data.WeaponTypes);
-        //     BroadcastRoom(uid, pkg);
-        // }
-        // #endregion
-        //
-        // #region StartGame
-        // [GameMessage(Cmd.StartGame)]
-        // public static void ReqStartGameHandle(MsgPack pack)
-        // {
-        //     long uid = pack.GetUid();
-        //     ReqStartGame req = pack.Body.reqStartGame;
-        //     var data = RoomSvc.Instance.GetPlayer(uid);
-        //     // 记录
-        //     data.IsGameReady = req.isReady;
-        //     // 广播
-        //     Room room = RoomSvc.Instance.GetRoomByUid(uid);
-        //     List<long> rspList = new List<long>();
-        //     foreach (var item in room.Players.Values)
-        //     {
-        //         if (item.IsGameReady)
-        //         {
-        //             rspList.Add(item.SysData.Uid);
-        //         }
-        //     }
-        //     
-        //     Pkg pkg = new Pkg()
-        //     {
-        //         Head = new Head()
-        //         {
-        //             Uid = uid,
-        //             Cmd = Cmd.Equip,
-        //             Result = Result.Success
-        //         },
-        //         Body = new Body()
-        //         {
-        //             rspStartGame = new RspStartGame()
-        //             {
-        //                 readyLists = rspList.ToArray()
-        //             }
-        //         }
-        //     };
-        //     BroadcastRoom(uid, pkg);
-        // }
-        // #endregion
+        #region Equip
+        [GameMessage(Cmd.Equip)]
+        public static void ReqEquipHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            ReqEquip req = pack.Body.reqEquip;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            // 记录
+            if (req.isSelect)
+            {
+                // 判断武器是否已经被选择了
+                foreach (var item in room.Players.Values)
+                {
+                    if (item.WeaponTypes.Contains(req.Weapon))
+                    {
+                        return;
+                    }
+                }
+                data.WeaponTypes.Add(req.Weapon);
+            }
+            else
+            {
+                data.WeaponTypes.Remove(req.Weapon);
+            }
+            // 广播
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.Equip,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspEquip = new RspEquip()
+                    {
+                        Nickname = data.SysData.Nickname,
+                        Weapon = req.Weapon,
+                        isSelect = req.isSelect
+                    }
+                }
+            };
+            BroadcastRoom(uid, pkg);
+        }
+        #endregion
+
+        #region StartGame
+        [GameMessage(Cmd.StartGame)]
+        public static void ReqStartGameHandle(MsgPack pack)
+        {
+            long uid = pack.GetUid();
+            ReqStartGame req = pack.Body.reqStartGame;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            // 记录
+            data.IsGameReady = req.isReady;
+            // 广播
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            List<long> rspList = new List<long>();
+            foreach (var item in room.Players.Values)
+            {
+                if (item.IsGameReady)
+                {
+                    rspList.Add(item.SysData.Uid);
+                }
+            }
+            
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.Equip,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspStartGame = new RspStartGame()
+                    {
+                        readyLists = rspList.ToArray()
+                    }
+                }
+            };
+            BroadcastRoom(uid, pkg);
+        }
+        #endregion
     }
 }

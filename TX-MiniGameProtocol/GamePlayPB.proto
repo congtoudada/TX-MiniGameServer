@@ -19,14 +19,14 @@ enum WeaponType {
 
 message ReqEquip  // ¾ÖÄÚÎäÆ÷Ñ¡Ôñ
 {
-  required WeaponType weapons = 1;
+  required WeaponType weapon = 1;
   required bool isSelect = 2;
 }
 
 message RspEquip
 {
   required string nickname = 1;
-  required WeaponType weapons = 2;
+  required WeaponType weapon = 2;
   required bool isSelect = 3;
 }
 

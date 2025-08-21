@@ -10,8 +10,8 @@ public partial class ReqEquip : global::ProtoBuf.IExtensible
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-    [global::ProtoBuf.ProtoMember(1, Name = @"weapons", IsRequired = true)]
-    public WeaponType Weapons { get; set; } = WeaponType.ZuoLun;
+    [global::ProtoBuf.ProtoMember(1, Name = @"weapon", IsRequired = true)]
+    public WeaponType Weapon { get; set; } = WeaponType.ZuoLun;
 
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
     public bool isSelect { get; set; }
@@ -28,8 +28,8 @@ public partial class RspEquip : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1, Name = @"nickname", IsRequired = true)]
     public string Nickname { get; set; }
 
-    [global::ProtoBuf.ProtoMember(2, Name = @"weapons", IsRequired = true)]
-    public WeaponType Weapons { get; set; } = WeaponType.ZuoLun;
+    [global::ProtoBuf.ProtoMember(2, Name = @"weapon", IsRequired = true)]
+    public WeaponType Weapon { get; set; } = WeaponType.ZuoLun;
 
     [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
     public bool isSelect { get; set; }
@@ -54,6 +54,9 @@ public partial class RspStartGame : global::ProtoBuf.IExtensible
     private global::ProtoBuf.IExtension __pbn__extensionData;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"readyList")]
+    public long[] readyLists { get; set; }
 
 }
 

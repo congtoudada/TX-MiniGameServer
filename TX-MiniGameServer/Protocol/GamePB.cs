@@ -85,6 +85,9 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1001)]
     public RspEquip rspEquip { get; set; }
 
+    [global::ProtoBuf.ProtoMember(1002)]
+    public ReqStartGame reqStartGame { get; set; }
+
     [global::ProtoBuf.ProtoMember(1003)]
     public RspStartGame rspStartGame { get; set; }
 

@@ -1,7 +1,7 @@
 syntax = "proto2";
 
 // 所有协议以"req"或"rsp"开头
-message ReqPing
+message ReqPing  // 心跳请求
 {
     required int64 timestamp = 1;  // 请求时间戳
 }
@@ -11,7 +11,7 @@ message RspPing
     required int64 timestamp = 1;  // 请求时间戳
 }
 
-message ReqJsonData
+message ReqJsonData  // Json请求
 {
     required string content = 1;  // 请求json
 }
@@ -21,14 +21,47 @@ message RspJsonData
     required string content = 1;  // 响应json
 }
 
-message ReqLogin
+message ReqLogin  // 登录请求
 {
     required string nickname = 1;  // 请求昵称
 }
 
 message RspLogin
 {
-    required string nickname = 1;  // 合法昵称
+    required string nickname = 1;
+}
+
+message ReqMatch // 匹配请求
+{
+    required bool isReady = 1;  // 是否就绪
+    required int32 roomId = 2;  // 请求房间号 (0表示由服务器分配)
+}
+
+message MatchInfo
+{
+    required string nickname = 1;  // 昵称
+    required bool isReady = 2;  // 是否准备就绪
+}
+
+message RspMatch
+{
+    repeated MatchInfo matchInfoList = 1;  // 玩家信息
+    required int32 roomId = 2;  // 房间号
+}
+
+message RspKick  // 踢下线
+{
+    
+}
+
+message ReqExitGame  // 下线请求
+{
+    
+}
+
+message RspExitGame
+{
+    
 }
 
 message PlayerData {

@@ -8,3 +8,34 @@ syntax = "proto2";
 //message RspTick{
 //  required string userData = 1;//用户信息
 //}
+
+enum WeaponType {
+  ZuoLun = 1;
+  JuJi = 2;
+  HuoPao = 3;
+  ShuiQiang = 4;
+  DianCiPao = 5;
+}
+
+message ReqEquip  // 局内武器选择
+{
+  required WeaponType weapons = 1;
+  required bool isSelect = 2;
+}
+
+message RspEquip
+{
+  required string nickname = 1;
+  required WeaponType weapons = 2;
+  required bool isSelect = 3;
+}
+
+message ReqStartGame  // 选择完武器后就绪, 所有人就绪游戏开始
+{
+  required bool isReady = 1;
+}
+
+message RspStartGame  // 游戏初始化数据
+{
+  
+}

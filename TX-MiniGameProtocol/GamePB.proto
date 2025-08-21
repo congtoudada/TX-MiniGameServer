@@ -19,26 +19,46 @@ message Head{
 
 //=================协议体=================//
 message Body{
+  // 系统从1开始
   optional ReqPing reqPing = 1;
   optional RspPing rspPing = 2;
   optional ReqJsonData reqJsonData = 3;
   optional RspJsonData rspJsonData = 4;
-  optional ReqLogin reqLoginData = 5;
-  optional RspLogin rspLoginData = 6;
+  optional ReqLogin reqLogin = 5;
+  optional RspLogin rspLogin = 6;
+  optional ReqMatch reqMatch = 7;
+  optional RspMatch rspMatch = 8;
+  optional RspKick rspKick = 10;
+  optional ReqExitGame reqExitGame = 11;
+  optional RspExitGame rspExitGame = 12;
+  // 玩法从1000开始
+  optional ReqEquip reqEquip = 1000;
+  optional RspEquip rspEquip = 1001;
+  optional RspStartGame rspStartGame = 1003;
 }
 
 //=================协议号=================//
 enum CMD {
+  //=================系统从1开始=================//
   Ping = 1;
-  Login = 2;
+  Json = 2;
+  Login = 3;
+  Match = 4;
+  Kick = 5;
+  ExitGame = 6;
+  //=================玩法从1000开始=================//
+  Equip = 1000;
+  StartGame = 1001;
 }
 
 //=================返回值=================//
 enum Result {
   Success = 0;
-  //=================系统从10000开始=================//
-  HasBeenRegistered = 10001;
-  HasOnline = 10002;
-  //=================玩法从20000开始=================//
+  //=================系统从1开始=================//
+  HasBeenRegistered = 1;  // 已经注册
+  HasOnline = 2;  // 已经在线
+  RoomBusy = 3;  // 房间已在游戏中
+  RoomFull = 4;  // 房间满人
+  //=================玩法从1000开始=================//
 }
 

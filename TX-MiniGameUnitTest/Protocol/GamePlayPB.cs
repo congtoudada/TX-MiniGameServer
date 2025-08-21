@@ -3,4 +3,68 @@
 // Input: GamePlayPB.proto
 
 #pragma warning disable CS1591, CS0612, CS3021, IDE1006
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqEquip : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"weapons", IsRequired = true)]
+    public WeaponType Weapons { get; set; } = WeaponType.ZuoLun;
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public bool isSelect { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspEquip : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"nickname", IsRequired = true)]
+    public string Nickname { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"weapons", IsRequired = true)]
+    public WeaponType Weapons { get; set; } = WeaponType.ZuoLun;
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public bool isSelect { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqStartGame : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public bool isReady { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspStartGame : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public enum WeaponType
+{
+    ZuoLun = 1,
+    JuJi = 2,
+    HuoPao = 3,
+    ShuiQiang = 4,
+    DianCiPao = 5,
+}
+
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

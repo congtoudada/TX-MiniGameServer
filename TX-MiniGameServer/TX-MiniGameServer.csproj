@@ -17,11 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Protocol\" />
-    <Folder Include="System\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Reference Include="PETimer">
+      <HintPath>..\Libs\PETimer.dll</HintPath>
+    </Reference>
     <Reference Include="PEUtils">
       <HintPath>..\Libs\PEUtils.dll</HintPath>
     </Reference>

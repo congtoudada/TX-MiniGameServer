@@ -59,10 +59,34 @@ public partial class Body : global::ProtoBuf.IExtensible
     public RspJsonData rspJsonData { get; set; }
 
     [global::ProtoBuf.ProtoMember(5)]
-    public ReqLogin reqLoginData { get; set; }
+    public ReqLogin reqLogin { get; set; }
 
     [global::ProtoBuf.ProtoMember(6)]
-    public RspLogin rspLoginData { get; set; }
+    public RspLogin rspLogin { get; set; }
+
+    [global::ProtoBuf.ProtoMember(7)]
+    public ReqMatch reqMatch { get; set; }
+
+    [global::ProtoBuf.ProtoMember(8)]
+    public RspMatch rspMatch { get; set; }
+
+    [global::ProtoBuf.ProtoMember(10)]
+    public RspKick rspKick { get; set; }
+
+    [global::ProtoBuf.ProtoMember(11)]
+    public ReqExitGame reqExitGame { get; set; }
+
+    [global::ProtoBuf.ProtoMember(12)]
+    public RspExitGame rspExitGame { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1000)]
+    public ReqEquip reqEquip { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1001)]
+    public RspEquip rspEquip { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1003)]
+    public RspStartGame rspStartGame { get; set; }
 
 }
 
@@ -70,15 +94,23 @@ public partial class Body : global::ProtoBuf.IExtensible
 public enum Cmd
 {
     Ping = 1,
-    Login = 2,
+    Json = 2,
+    Login = 3,
+    Match = 4,
+    Kick = 5,
+    ExitGame = 6,
+    Equip = 1000,
+    StartGame = 1001,
 }
 
 [global::ProtoBuf.ProtoContract()]
 public enum Result
 {
     Success = 0,
-    HasBeenRegistered = 10001,
-    HasOnline = 10002,
+    HasBeenRegistered = 1,
+    HasOnline = 2,
+    RoomBusy = 3,
+    RoomFull = 4,
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

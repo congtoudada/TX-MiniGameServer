@@ -76,6 +76,78 @@ public partial class RspLogin : global::ProtoBuf.IExtensible
 }
 
 [global::ProtoBuf.ProtoContract()]
+public partial class ReqMatch : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public bool isReady { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public int roomId { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class MatchInfo : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"nickname", IsRequired = true)]
+    public string Nickname { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public bool isReady { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspMatch : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"matchInfoList")]
+    public global::System.Collections.Generic.List<MatchInfo> matchInfoLists { get; } = new global::System.Collections.Generic.List<MatchInfo>();
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public int roomId { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspKick : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqExitGame : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspExitGame : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+}
+
+[global::ProtoBuf.ProtoContract()]
 public partial class PlayerData : global::ProtoBuf.IExtensible
 {
     private global::ProtoBuf.IExtension __pbn__extensionData;

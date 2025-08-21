@@ -14,7 +14,7 @@ namespace MiniGameServer
 {
     public class ServerSession : KcpSession<Pkg>
     {
-        public long Uid => PlayerTempData.Uid;
+        public long Uid => PlayerSysData.Uid;
         public bool IsBeginPing = false;
         public long LastPingTime = 0;
 
@@ -23,7 +23,7 @@ namespace MiniGameServer
             Cmd.Ping,
         };
 
-        public PlayerTempData PlayerTempData { get; } = new PlayerTempData();
+        public PlayerSysData PlayerSysData { get; } = new PlayerSysData();
 
         protected override void OnConnected()
         {

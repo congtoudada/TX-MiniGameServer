@@ -6,6 +6,7 @@
   功能：服务器定时回调
 *****************************************************/
 
+using System.Collections.Generic;
 using MiniGameServer;
 using PENet;
 
@@ -37,6 +38,23 @@ namespace MiniGameServer
                         }
                     }
                 }
+            }
+        }
+
+        [EventMessage(ServerConfig.DestroyRoomFrequency)]
+        public static void DestroyRoomEvent()
+        {
+            List<int> killIds = new List<int>();
+            foreach (var pair in RoomSvc.Instance.Rooms)
+            {
+                if (pair.Value.RoomState == RoomState.Destroy)
+                {
+                    killIds.Add(pair.Key);
+                }
+            }
+            for (int i = 0; i < killIds.Count; i++)
+            {
+                RoomSvc.Instance.DestroyRoom(killIds[i]);
             }
         }
     }

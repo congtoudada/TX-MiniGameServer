@@ -88,19 +88,29 @@ namespace MiniGameServer
         {
             if (session != null)
             {
-                session.CloseSession();
+                RoomSvc.Instance.ExitRoom(session.Uid, session.PlayerSysData.RoomId);
                 _onLineDict.Remove(session.Uid);
-                this.Log($"Acct Offline: {session.Uid} {session.PlayerTempData.Nickname}");
+                session.CloseSession();
+                this.Log($"Acct Offline: {session.Uid} {session.PlayerSysData.Nickname}");
             }
         }
 
-        public PlayerTempData GetPlayerTempData(long key)
+        public PlayerSysData GetPlayerTempData(long uid)
         {
-            if (IsAcctOnLine(key))
+            if (IsAcctOnLine(uid))
             {
-                return _onLineDict[key].PlayerTempData;
+                return _onLineDict[uid].PlayerSysData;
             }
 
+            return null;
+        }
+
+        public ServerSession GetSession(long uid)
+        {
+            if (IsAcctOnLine(uid))
+            {
+                return _onLineDict[uid];
+            }
             return null;
         }
     }

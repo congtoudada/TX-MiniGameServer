@@ -30,12 +30,12 @@ message RspEquip
   required bool isSelect = 3;
 }
 
-message ReqStartGame  // 选择完武器后就绪, 所有人就绪游戏开始
+message ReqStartGame  // 选择完武器后就绪, 所有人就绪即可开始
 {
   required bool isReady = 1;
 }
 
-message RspStartGame  // 游戏初始化数据
+message RspStartGame
 {
-  
+  repeated int64 readyList = 1;  // 已经就绪的玩家id
 }

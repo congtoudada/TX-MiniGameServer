@@ -16,8 +16,8 @@ namespace MiniGameServer
         public const int RoomMaxCount = 4;  // 房间最大人数
         
         /** ------------------------- 协议相关 ------------------------- **/
-        public const int PingQueryFrequency = 20 * 1000;  // n s轮询一次失效心跳
-        public const int PingDestroyInterval = 120 * 1000; //客户端n s没有心跳就销毁
+        public const int PingQueryFrequency = 10 * 1000;  // n s轮询一次失效心跳
+        public const int PingDestroyInterval = 30 * 1000; //客户端n s没有心跳就销毁
         public const int DestroyRoomFrequency = 10 * 1000;  // n s轮询一次销毁房间
     }
 }

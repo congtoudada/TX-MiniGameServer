@@ -119,5 +119,29 @@ namespace MiniGameServer
             }
             return infoList;
         }
+
+        public void BroadcastMatch(long uid)
+        {
+            if (Players.Count == 0) return;
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head
+                {
+                    Uid = uid,
+                    Seq = 0,
+                    Cmd = Cmd.Match,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspMatch = new RspMatch()
+                    {
+                        roomId = RoomId,
+                    }
+                }
+            };
+            pkg.Body.rspMatch.matchInfoLists.AddRange(GetMatchInfoList());
+            Broadcast(pkg);
+        }
     }
 }

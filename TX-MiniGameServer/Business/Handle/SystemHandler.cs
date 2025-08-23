@@ -24,27 +24,6 @@ namespace MiniGameServer
                 return;
             }
             long uid = pack.Head.Uid;
-            if (CacheSvc.Instance.IsAcctOnLine(uid))  // 已经在线
-            {
-                KcpLog.Warn($"[MsgHandler] Acct has online! uid: {uid}");
-                // code = Result.HasOnline;
-                // 给已在线用户发送踢下线协议并强制下线
-                var onlineSession = CacheSvc.Instance.GetSession(uid);
-                onlineSession.SendMsg(new Pkg() {
-                    Head = new Head
-                    {
-                        Uid = uid,
-                        Seq = 1,
-                        Cmd = Cmd.Kick,
-                        Result = Result.Success
-                    },
-                    Body = new Body()
-                    {
-                        rspKick = new RspKick()
-                    }
-                });
-                CacheSvc.Instance.AcctOffline(onlineSession);  // 踢下线
-            }
             uid = CacheSvc.Instance.AcctOnline(uid, req.Nickname, pack.Session as ServerSession);
             if (uid == -1) // 已经注册
             {
@@ -112,9 +91,9 @@ namespace MiniGameServer
             }
             
             // 进入房间成功就广播
+            room ??= RoomSvc.Instance.GetRoom(roomId);
             if (code == Result.Success)
             {
-                room ??= RoomSvc.Instance.GetRoom(roomId);
                 Pkg pkg = new Pkg()
                 {
                     Head = new Head
@@ -137,7 +116,7 @@ namespace MiniGameServer
             }
             else  // 进入房间失败就单发
             {
-                pack.Session.SendMsg(new Pkg()
+                Pkg pkg = new Pkg()
                 {
                     Head = new Head
                     {
@@ -153,7 +132,9 @@ namespace MiniGameServer
                             roomId = roomId,
                         }
                     }
-                });
+                };
+                pkg.Body.rspMatch.matchInfoLists.AddRange(room.GetMatchInfoList());
+                pack.Session.SendMsg(pkg);
             }
         }
 

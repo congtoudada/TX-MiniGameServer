@@ -66,8 +66,34 @@ namespace MiniGameServer
         /// <param name="session"></param>
         /// <returns></returns>
         public long AcctOnline(long uid, string nickName, ServerSession session) {
-            // NickName不存在代表首次注册，随机生成uid
+            // 通过Nickname找真实uid
             var cacheData = Instance.ServerDiskData;
+            if (cacheData.RegisterDict.ContainsKey(nickName))
+            {
+                uid = cacheData.RegisterDict[nickName];
+            }
+            if (Instance.IsAcctOnLine(uid))  // 已经在线
+            {
+                this.Warn($"[MsgHandler] Acct has online! uid: {uid}");
+                // code = Result.HasOnline;
+                // 给已在线用户发送踢下线协议并强制下线
+                var onlineSession = Instance.GetSession(uid);
+                onlineSession.SendMsg(new Pkg() {
+                    Head = new Head
+                    {
+                        Uid = uid,
+                        Seq = 1,
+                        Cmd = Cmd.Kick,
+                        Result = Result.Success
+                    },
+                    Body = new Body()
+                    {
+                        rspKick = new RspKick()
+                    }
+                });
+                Instance.AcctOffline(onlineSession);  // 踢下线
+            }
+            // NickName不存在代表首次注册，随机生成uid
             if (!cacheData.RegisterDict.ContainsKey(nickName))
             {
                 uid = ++cacheData.CurrentId;
@@ -79,6 +105,7 @@ namespace MiniGameServer
             {
                 uid = cacheData.RegisterDict[nickName];
             }
+            
             _onLineDict.Add(uid, session);
             this.Log($"Acct Online: {uid} {nickName}");
             return uid;
@@ -88,7 +115,11 @@ namespace MiniGameServer
         {
             if (session != null)
             {
-                RoomSvc.Instance.ExitRoom(session.Uid, session.PlayerSysData.RoomId);
+                bool ret = RoomSvc.Instance.ExitRoom(session.Uid, session.PlayerSysData.RoomId);
+                if (ret)
+                {
+                    RoomSvc.Instance.GetRoom(session.PlayerSysData.RoomId)?.BroadcastMatch(session.Uid);
+                }
                 _onLineDict.Remove(session.Uid);
                 session.CloseSession();
                 this.Log($"Acct Offline: {session.Uid} {session.PlayerSysData.Nickname}");

@@ -54,6 +54,7 @@ namespace MiniGameServer
             }
             for (int i = 0; i < killIds.Count; i++)
             {
+                KcpLog.Log($"[EventHandler] Destroy Room: {killIds[i]}");
                 RoomSvc.Instance.DestroyRoom(killIds[i]);
             }
         }

@@ -128,5 +128,9 @@ namespace MiniGameServer
 
             return null;
         }
+        
+        public override void Update() {
+            base.Update();
+        }
     }
 }

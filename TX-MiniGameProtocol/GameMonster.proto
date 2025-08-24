@@ -12,3 +12,31 @@ message RspFindTarget
   required int64 uid = 1;
 }
 
+message NetVector3
+{
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
+message ReqGenMonster  // 刷怪
+{
+  required int32 actionId = 1;  // 动作id
+  required int32 monsterIdx = 2;  // 怪物配置索引
+  required int32 genCount = 3;  // 生成数量
+//  required float genDelay = 4;  // 生成延迟
+//  required float genInterval = 4;  // 生成间隔
+  required NetVector3 genPos = 4;  // 生成位置
+  required NetVector3 genRotate = 5;  // 生成旋转
+  required int32 genType = 6; // 刷怪触发方式(Debug)
+}
+
+message RspGenMonster
+{
+  required int32 actionId = 1;
+  required int32 monsterIdx = 2;
+  required int32 genCount = 3;
+  required NetVector3 genPos = 4;  // 生成位置
+  required NetVector3 genRotate = 5;  // 生成旋转
+}
+

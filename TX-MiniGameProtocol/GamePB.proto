@@ -2,6 +2,7 @@ syntax = "proto2";
 
 import "GamePlayPB.proto";
 import "GameSystemPB.proto";
+import "GameMonster.proto";
 
 //=================数据包=================//
 message Pkg{
@@ -36,6 +37,8 @@ message Body{
   optional RspEquip rspEquip = 1001;
   optional ReqStartGame reqStartGame = 1002;
   optional RspStartGame rspStartGame = 1003;
+  optional ReqGenMonster reqGenMonster = 1004;
+  optional RspGenMonster rspGenMonster = 1005;
 }
 
 //=================协议号=================//
@@ -50,6 +53,7 @@ enum CMD {
   //=================玩法从1000开始=================//
   Equip = 1000;
   StartGame = 1001;
+  GenMonster = 1002;
 }
 
 //=================返回值=================//

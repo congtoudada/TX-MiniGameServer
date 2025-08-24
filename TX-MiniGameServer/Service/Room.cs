@@ -17,10 +17,20 @@ namespace MiniGameServer
         Game = 1,  // 游戏中
         Destroy = 2, //待销毁
     }
+
     public class Room
     {
+        // public class GenActionPackage
+        // {
+        //     public long Uid;
+        //     public long LastSendTimestamp;
+        //     public ReqGenMonster Req;
+        // }
+        
         public Dictionary<long, PlayerGameData> Players = new Dictionary<long, PlayerGameData>();  // 房间内玩家列表
         public RoomState RoomState = RoomState.Ready;
+        public HashSet<int> TriggeredActions = new HashSet<int>();
+        // public List<GenActionPackage> GenMonsterCache = new List<GenActionPackage>();
         public int RoomId;
 
         public Room(int roomId)

@@ -31,6 +31,7 @@ namespace MiniGameServer {
             CacheSvc.Instance.Init();
             TimerSvc.Instance.Init();
             NetSvc.Instance.Init();
+            RoomSvc.Instance.Init();
 
             //业务
             // LoginSys.Instance.Init();
@@ -45,6 +46,7 @@ namespace MiniGameServer {
             CacheSvc.Instance.Update();
             TimerSvc.Instance.Update();
             NetSvc.Instance.Update();
+            RoomSvc.Instance.Update();
 
             //业务
             // LoginSys.Instance.Update();

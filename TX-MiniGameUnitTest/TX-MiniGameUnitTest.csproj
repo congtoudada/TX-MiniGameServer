@@ -79,6 +79,7 @@
     <Compile Include="Common\MsgPack.cs" />
     <Compile Include="Handle\MsgHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\GameMonster.cs" />
     <Compile Include="Protocol\GamePB.cs" />
     <Compile Include="Protocol\GamePlayPB.cs" />
     <Compile Include="Protocol\GameSystemPB.cs" />

@@ -6,6 +6,7 @@
 	功能：定义消息回调
 *****************************************************/
 using System;
+using System.Numerics;
 using PENet;
 
 namespace MiniGameServer
@@ -40,6 +41,20 @@ namespace MiniGameServer
             // KcpLog.Log($"Response - ReqPingHandle");
         }
         #endregion
-    }
 
+        public static Vector3 NetVtoV(NetVector3 netV)
+        {
+            return new Vector3(netV.X, netV.Y, netV.Z);
+        }
+        
+        public static NetVector3 VtoNetV(Vector3 v)
+        {
+            NetVector3 NetV = new NetVector3();
+            NetV.X = v.X;
+            NetV.Y = v.Y;
+            NetV.Z = v.Z;
+
+            return NetV;
+        }
+    }
 }

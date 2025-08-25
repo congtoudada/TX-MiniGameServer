@@ -7,12 +7,14 @@
 *****************************************************/
 
 
+using System.Security.Principal;
 using PENet;
 
 namespace MiniGameServer
 {
     public partial class MsgHandler
     {
+        public static long mid = 1;
         #region GenMonster
 
         [GameMessage(Cmd.GenMonster)]
@@ -30,6 +32,12 @@ namespace MiniGameServer
             }
             KcpLog.Log($"[MsgHandler] ReqGenMonsterHandle Success Handle GenType: {req.genType} ActionId: {req.actionId}");
 
+            mid++; // 
+
+            MonsterData monsData = new MonsterData(100, NetVtoV(req.genPos), NetVtoV(req.genRotate));
+            
+            room.Monsters.Add(mid, monsData);
+
             room.TriggeredActions.Add(req.actionId);
             // 广播
             Pkg pkg = new Pkg()
@@ -46,14 +54,45 @@ namespace MiniGameServer
                     {
                         actionId = req.actionId,
                         monsterIdx = req.monsterIdx,
-                        genCount = req.genCount,
+                        
+                        genCount = 1,//req.genCount,
                         genPos = req.genPos,
-                        genRotate = req.genRotate
+                        genRotate = req.genRotate,
+                        mId = mid,
                     }
                 }
             };
             room.Broadcast(pkg);
         }
         #endregion
+        
+        [GameMessage(Cmd.AttackMonster)]
+        public static void ReqAttackMonsterHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            var req = pack.Body.reqAttackMonster;
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            
+            // 广播
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.AttackMonster,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspAttackMonster = new RspAttackMonster()
+                    {
+                        mId = req.mId,
+                        Damage = req.Damage,
+                    }
+                }
+            };
+            room.Broadcast(pkg);
+        }
     }
 }

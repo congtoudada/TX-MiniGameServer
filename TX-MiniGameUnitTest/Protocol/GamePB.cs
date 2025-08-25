@@ -97,6 +97,12 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1005)]
     public RspGenMonster rspGenMonster { get; set; }
 
+    [global::ProtoBuf.ProtoMember(1006)]
+    public ReqAttackMonster reqAttackMonster { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1007)]
+    public RspAttackMonster rspAttackMonster { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract(Name = @"CMD")]
@@ -111,6 +117,7 @@ public enum Cmd
     Equip = 1000,
     StartGame = 1001,
     GenMonster = 1002,
+    AttackMonster = 1003,
 }
 
 [global::ProtoBuf.ProtoContract()]

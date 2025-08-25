@@ -100,6 +100,39 @@ public partial class RspGenMonster : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
     public NetVector3 genRotate { get; set; }
 
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
+    public long mId { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqAttackMonster : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"damage", IsRequired = true)]
+    public float Damage { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspAttackMonster : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"damage", IsRequired = true)]
+    public float Damage { get; set; }
+
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

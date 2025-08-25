@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+// 所有协议以"req"或"rsp"开头
+//message ReqTick{
+//  required string acct = 1; //用户名
+//}
+//
+//message RspTick{
+//  required string userData = 1;//用户信息
+//}
+
+message ReqEquip  // 局内武器选择
+{
+
+}
+
+message RspEquip
+{
+  required bool isSelect = 3;
+}

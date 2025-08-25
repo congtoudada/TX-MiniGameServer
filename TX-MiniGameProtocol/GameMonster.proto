@@ -38,5 +38,18 @@ message RspGenMonster
   required int32 genCount = 3;
   required NetVector3 genPos = 4;  // 生成位置
   required NetVector3 genRotate = 5;  // 生成旋转
+  required int64 mId = 6; // 怪物id
+}
+
+message ReqAttackMonster  // 打怪
+{
+  required int64 mId = 1; // 怪物id
+  required float damage = 2;  // 伤害
+}
+
+message RspAttackMonster
+{
+  required int64 mId = 1; // 怪物id
+  required float damage = 2;  // 伤害
 }
 

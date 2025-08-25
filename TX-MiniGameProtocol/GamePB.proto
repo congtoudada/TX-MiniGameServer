@@ -39,6 +39,8 @@ message Body{
   optional RspStartGame rspStartGame = 1003;
   optional ReqGenMonster reqGenMonster = 1004;
   optional RspGenMonster rspGenMonster = 1005;
+  optional ReqAttackMonster reqAttackMonster = 1006;
+  optional RspAttackMonster rspAttackMonster = 1007;
 }
 
 //=================协议号=================//
@@ -54,6 +56,7 @@ enum CMD {
   Equip = 1000;
   StartGame = 1001;
   GenMonster = 1002;
+  AttackMonster = 1003;
 }
 
 //=================返回值=================//

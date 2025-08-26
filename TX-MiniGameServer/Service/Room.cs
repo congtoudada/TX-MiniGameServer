@@ -126,18 +126,33 @@ namespace MiniGameServer
             List<MatchInfo> infoList = new List<MatchInfo>(Players.Count);
             if (RoomState == RoomState.Ready)
             {
-                foreach (var player in Players.Values)
+                for (int i = 0; i < Players.Count; i++)
                 {
+                    var player = Players[i];
                     if (player.SysData != null)
                     {
                         infoList.Add(new MatchInfo()
                         {
                             uId = player.SysData.Uid,
                             Nickname = player.SysData.Nickname,
-                            isReady = player.IsMatchReady
+                            isReady = player.IsMatchReady,
+                            roomOrder = i,
                         });
                     }
                 }
+                
+                // foreach (var player in Players.Values)
+                // {
+                //     if (player.SysData != null)
+                //     {
+                //         infoList.Add(new MatchInfo()
+                //         {
+                //             uId = player.SysData.Uid,
+                //             Nickname = player.SysData.Nickname,
+                //             isReady = player.IsMatchReady,
+                //         });
+                //     }
+                // }
             }
             return infoList;
         }

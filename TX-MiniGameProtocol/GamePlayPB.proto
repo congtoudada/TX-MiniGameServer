@@ -9,6 +9,13 @@ syntax = "proto2";
 //  required string userData = 1;//用户信息
 //}
 
+message NetVector3
+{
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
 enum WeaponType {
   ZuoLun = 1;
   JuJi = 2;

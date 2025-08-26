@@ -108,6 +108,7 @@ namespace MiniGameServer
                         rspMatch = new RspMatch()
                         {
                             roomId = roomId,
+                            ownerUId = room.GetOwnerUid()
                         }
                     }
                 };
@@ -153,6 +154,42 @@ namespace MiniGameServer
             else
             {
                 session?.CloseSession();    
+            }
+        }
+        #endregion
+        
+        #region LoadComplete
+        [GameMessage(Cmd.LoadComplete)]
+        public static void ReqLoadCompleteHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            data.IsGameReady = true;
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            bool allReady = true;
+            foreach (var player in room.Players.Values)
+            {
+                if (!player.IsGameReady)
+                {
+                    allReady = false;
+                    break;
+                }
+            }
+
+            if (allReady)
+            {
+                room.RoomState = RoomState.Game;
+                Pkg pkg = new Pkg()
+                {
+                    Head = new Head
+                    {
+                        Uid = uid,
+                        Cmd = Cmd.LoadComplete,
+                        Result = Result.Success
+                    },
+                };
+                room.Broadcast(pkg);
             }
         }
         #endregion

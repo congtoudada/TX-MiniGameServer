@@ -21,6 +21,8 @@ namespace MiniGameServer
         private readonly HashSet<Cmd> _logBlack = new HashSet<Cmd>()
         {
             Cmd.Ping,
+            Cmd.PlayerTick,
+            Cmd.SyncPosMonster
         };
 
         public PlayerSysData PlayerSysData { get; } = new PlayerSysData();

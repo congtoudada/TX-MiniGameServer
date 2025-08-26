@@ -4,6 +4,24 @@
 
 #pragma warning disable CS1591, CS0612, CS3021, IDE1006
 [global::ProtoBuf.ProtoContract()]
+public partial class NetVector3 : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"x", IsRequired = true)]
+    public float X { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"y", IsRequired = true)]
+    public float Y { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"z", IsRequired = true)]
+    public float Z { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
 public partial class ReqEquip : global::ProtoBuf.IExtensible
 {
     private global::ProtoBuf.IExtension __pbn__extensionData;

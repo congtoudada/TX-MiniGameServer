@@ -3,6 +3,7 @@ syntax = "proto2";
 import "GamePlayPB.proto";
 import "GameSystemPB.proto";
 import "GameMonster.proto";
+import "GamePlayerPB.proto";
 
 //=================数据包=================//
 message Pkg{
@@ -32,6 +33,8 @@ message Body{
   optional RspKick rspKick = 10;
   optional ReqExitGame reqExitGame = 11;
   optional RspExitGame rspExitGame = 12;
+  optional ReqLoadComplete reqLoadComplete = 13;
+  optional RspLoadComplete rspLoadComplete = 14;
   // 玩法从1000开始
   optional ReqEquip reqEquip = 1000;
   optional RspEquip rspEquip = 1001;
@@ -41,6 +44,12 @@ message Body{
   optional RspGenMonster rspGenMonster = 1005;
   optional ReqAttackMonster reqAttackMonster = 1006;
   optional RspAttackMonster rspAttackMonster = 1007;
+  optional ReqSyncPosMonster reqSyncPosMonster = 1008;
+  optional RspSyncPosMonster rspSyncPosMonster = 1009;
+  optional ReqPlayerTick reqPlayerTick = 1010;
+  optional RspPlayerTick rspPlayerTick = 1011;
+  optional ReqFindTarget reqFindTarget = 1012;
+  optional RspFindTarget rspFindTarget = 1013;
 }
 
 //=================协议号=================//
@@ -52,11 +61,15 @@ enum CMD {
   Match = 4;
   Kick = 5;
   ExitGame = 6;
+  LoadComplete = 7;
   //=================玩法从1000开始=================//
   Equip = 1000;
   StartGame = 1001;
   GenMonster = 1002;
   AttackMonster = 1003;
+  SyncPosMonster = 1004;
+  PlayerTick = 1005;
+  MonsterFindTarget = 1006;
 }
 
 //=================返回值=================//

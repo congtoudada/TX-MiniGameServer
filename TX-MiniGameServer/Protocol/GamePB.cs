@@ -79,6 +79,12 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(12)]
     public RspExitGame rspExitGame { get; set; }
 
+    [global::ProtoBuf.ProtoMember(13)]
+    public ReqLoadComplete reqLoadComplete { get; set; }
+
+    [global::ProtoBuf.ProtoMember(14)]
+    public RspLoadComplete rspLoadComplete { get; set; }
+
     [global::ProtoBuf.ProtoMember(1000)]
     public ReqEquip reqEquip { get; set; }
 
@@ -103,6 +109,24 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1007)]
     public RspAttackMonster rspAttackMonster { get; set; }
 
+    [global::ProtoBuf.ProtoMember(1008)]
+    public ReqSyncPosMonster reqSyncPosMonster { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1009)]
+    public RspSyncPosMonster rspSyncPosMonster { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1010)]
+    public ReqPlayerTick reqPlayerTick { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1011)]
+    public RspPlayerTick rspPlayerTick { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1012)]
+    public ReqFindTarget reqFindTarget { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1013)]
+    public RspFindTarget rspFindTarget { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract(Name = @"CMD")]
@@ -114,10 +138,14 @@ public enum Cmd
     Match = 4,
     Kick = 5,
     ExitGame = 6,
+    LoadComplete = 7,
     Equip = 1000,
     StartGame = 1001,
     GenMonster = 1002,
     AttackMonster = 1003,
+    SyncPosMonster = 1004,
+    PlayerTick = 1005,
+    MonsterFindTarget = 1006,
 }
 
 [global::ProtoBuf.ProtoContract()]

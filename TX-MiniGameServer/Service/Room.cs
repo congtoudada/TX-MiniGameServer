@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MiniGameServer
 {
@@ -28,6 +29,7 @@ namespace MiniGameServer
         // }
         
         public Dictionary<long, PlayerGameData> Players = new Dictionary<long, PlayerGameData>();  // 房间内玩家列表
+        public List<long> OwnerList = new List<long>(); // 房主列表
         public RoomState RoomState = RoomState.Ready;
         public HashSet<int> TriggeredActions = new HashSet<int>();
         
@@ -61,6 +63,11 @@ namespace MiniGameServer
             return Players.GetValueOrDefault(uid);
         }
 
+        public long GetOwnerUid()
+        {
+            return OwnerList.First();
+        }
+
         public void AddPlayer(long uid)
         {
             if (!Players.ContainsKey(uid))
@@ -71,6 +78,7 @@ namespace MiniGameServer
                     Session = CacheSvc.Instance.GetSession(uid)
                 };
                 Players.Add(uid, gameData);
+                OwnerList.Add(uid);
                 Players[uid].SysData.RoomId = RoomId;
             }
         }
@@ -80,6 +88,7 @@ namespace MiniGameServer
             if (Players.ContainsKey(uid))
             {
                 Players[uid].SysData.RoomId = 0;
+                OwnerList.Remove(uid);
                 Players.Remove(uid);
                 // 解散~
                 if (Players.Count == 0)
@@ -105,7 +114,7 @@ namespace MiniGameServer
             foreach (var gameData in Players.Values)
             {
                 var session = gameData.Session;
-                if (session != null)
+                if (session != null && session.IsConnected())
                 {
                     session.SendMsg(pkg);
                 }
@@ -123,6 +132,7 @@ namespace MiniGameServer
                     {
                         infoList.Add(new MatchInfo()
                         {
+                            uId = player.SysData.Uid,
                             Nickname = player.SysData.Nickname,
                             isReady = player.IsMatchReady
                         });

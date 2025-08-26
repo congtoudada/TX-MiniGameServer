@@ -4,54 +4,6 @@
 
 #pragma warning disable CS1591, CS0612, CS3021, IDE1006
 [global::ProtoBuf.ProtoContract()]
-public partial class ReqFindTarget : global::ProtoBuf.IExtensible
-{
-    private global::ProtoBuf.IExtension __pbn__extensionData;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
-
-    [global::ProtoBuf.ProtoMember(1, Name = @"x", IsRequired = true)]
-    public float X { get; set; }
-
-    [global::ProtoBuf.ProtoMember(2, Name = @"y", IsRequired = true)]
-    public float Y { get; set; }
-
-    [global::ProtoBuf.ProtoMember(3, Name = @"z", IsRequired = true)]
-    public float Z { get; set; }
-
-}
-
-[global::ProtoBuf.ProtoContract()]
-public partial class RspFindTarget : global::ProtoBuf.IExtensible
-{
-    private global::ProtoBuf.IExtension __pbn__extensionData;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
-
-    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
-    public long Uid { get; set; }
-
-}
-
-[global::ProtoBuf.ProtoContract()]
-public partial class NetVector3 : global::ProtoBuf.IExtensible
-{
-    private global::ProtoBuf.IExtension __pbn__extensionData;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
-
-    [global::ProtoBuf.ProtoMember(1, Name = @"x", IsRequired = true)]
-    public float X { get; set; }
-
-    [global::ProtoBuf.ProtoMember(2, Name = @"y", IsRequired = true)]
-    public float Y { get; set; }
-
-    [global::ProtoBuf.ProtoMember(3, Name = @"z", IsRequired = true)]
-    public float Z { get; set; }
-
-}
-
-[global::ProtoBuf.ProtoContract()]
 public partial class ReqGenMonster : global::ProtoBuf.IExtensible
 {
     private global::ProtoBuf.IExtension __pbn__extensionData;
@@ -133,6 +85,119 @@ public partial class RspAttackMonster : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(2, Name = @"damage", IsRequired = true)]
     public float Damage { get; set; }
 
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqSyncPosMonsterItem : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public long uId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"pos", IsRequired = true)]
+    public NetVector3 Pos { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, Name = @"dir", IsRequired = true)]
+    public NetVector3 Dir { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, Name = @"speed", IsRequired = true)]
+    public float Speed { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqSyncPosMonster : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"reqList")]
+    public global::System.Collections.Generic.List<ReqSyncPosMonsterItem> reqLists { get; } = new global::System.Collections.Generic.List<ReqSyncPosMonsterItem>();
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"timestamp", IsRequired = true)]
+    public long Timestamp { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspSyncPosMonsterItem : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public long uId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public NetVector3 targetPos { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspSyncPosMonster : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"rspList")]
+    public global::System.Collections.Generic.List<RspSyncPosMonsterItem> rspLists { get; } = new global::System.Collections.Generic.List<RspSyncPosMonsterItem>();
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"timestamp", IsRequired = true)]
+    public long Timestamp { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqFindTarget : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"type", IsRequired = true)]
+    public MonsterNetType Type { get; set; } = MonsterNetType.Idle;
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"pos", IsRequired = true)]
+    public NetVector3 Pos { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspFindTarget : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public enum MonsterNetType
+{
+    Idle = 1,
+    Chase = 2,
+    Shoot = 3,
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

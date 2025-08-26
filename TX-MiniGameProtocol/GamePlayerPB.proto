@@ -1,5 +1,7 @@
 syntax = "proto2";
 
+import "GamePlayPB.proto";
+
 // 所有协议以"req"或"rsp"开头
 //message ReqTick{
 //  required string acct = 1; //用户名
@@ -9,12 +11,19 @@ syntax = "proto2";
 //  required string userData = 1;//用户信息
 //}
 
-message ReqEquip  // 局内武器选择
+message ReqPlayerTick  // 局内玩家同步
 {
-
+  required NetVector3 position = 1;
+  // 开火...
 }
 
-message RspEquip
+message RspPlayerTickItem
 {
-  required bool isSelect = 3;
+  required int64 uid = 1;
+  required NetVector3 position = 2;
+}
+
+message RspPlayerTick
+{
+  repeated RspPlayerTickItem itemList = 1; 
 }

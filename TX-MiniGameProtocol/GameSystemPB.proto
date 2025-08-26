@@ -39,14 +39,17 @@ message ReqMatch // 匹配请求
 
 message MatchInfo
 {
-    required string nickname = 1;  // 昵称
-    required bool isReady = 2;  // 是否准备就绪
+    required int64 uId = 1;
+    required string nickname = 2;  // 昵称
+    required bool isReady = 3;  // 是否准备就绪
+    required int32 roomOrder = 4;  // 房间序号
 }
 
 message RspMatch
 {
     repeated MatchInfo matchInfoList = 1;  // 玩家信息
     required int32 roomId = 2;  // 房间号
+    required int64 ownerUId = 3;  // 房主Uid
 }
 
 message RspKick  // 踢下线
@@ -68,4 +71,14 @@ message PlayerData {
     required int32 uid = 1; //UID(首次游戏为0，唯一)
     required string nickName = 2; //名字(唯一)
     // TODO:简化项目，所有数据由用户本地保存
+}
+
+message ReqLoadComplete
+{
+    
+}
+
+message RspLoadComplete
+{
+    
 }

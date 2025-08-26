@@ -97,11 +97,17 @@ public partial class MatchInfo : global::ProtoBuf.IExtensible
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
         => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-    [global::ProtoBuf.ProtoMember(1, Name = @"nickname", IsRequired = true)]
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long uId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"nickname", IsRequired = true)]
     public string Nickname { get; set; }
 
-    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
     public bool isReady { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
+    public int roomOrder { get; set; }
 
 }
 
@@ -117,6 +123,9 @@ public partial class RspMatch : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
     public int roomId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public long ownerUId { get; set; }
 
 }
 
@@ -159,6 +168,24 @@ public partial class PlayerData : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
     public string nickName { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqLoadComplete : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspLoadComplete : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
 }
 

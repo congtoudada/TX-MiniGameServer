@@ -7,6 +7,7 @@
 *****************************************************/
 
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace MiniGameServer
 {
@@ -18,5 +19,7 @@ namespace MiniGameServer
 
         public List<WeaponType> WeaponTypes; // 武器列表
         public bool IsGameReady;  // 装备结束，是否准备就绪
+
+        public Vector3 Position;
     }
 }

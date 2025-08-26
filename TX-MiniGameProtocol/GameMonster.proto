@@ -1,22 +1,12 @@
 syntax = "proto2";
 
-message ReqFindTarget  // 索敌
-{
-  required float x = 1;
-  required float y = 2;
-  required float z = 3;
-}
+import "GamePlayPB.proto";
 
-message RspFindTarget
+enum MonsterNetType
 {
-  required int64 uid = 1;
-}
-
-message NetVector3
-{
-  required float x = 1;
-  required float y = 2;
-  required float z = 3;
+  Idle = 1;  // 站桩
+  Chase = 2;  // 追逐
+  Shoot = 3;  // 射击
 }
 
 message ReqGenMonster  // 刷怪
@@ -53,3 +43,43 @@ message RspAttackMonster
   required float damage = 2;  // 伤害
 }
 
+message ReqSyncPosMonsterItem
+{
+  required int64 mId = 1; // 怪物id
+  required int64 uId = 2;  // 索敌id
+  required NetVector3 pos = 3;  // 怪物位置
+  required NetVector3 dir = 4;  // 运动方向
+  required float speed = 5;  // 运动速度
+}
+
+message ReqSyncPosMonster
+{
+  repeated ReqSyncPosMonsterItem reqList = 1;
+  required int64 timestamp = 2;  // 请求时间戳
+}
+
+message RspSyncPosMonsterItem
+{
+  required int64 mId = 1; // 怪物id
+  required int64 uId = 2;
+  required NetVector3 targetPos = 3;  // 目标位置
+}
+
+message RspSyncPosMonster
+{
+  repeated RspSyncPosMonsterItem rspList = 1;
+  required int64 timestamp = 2;  // 请求时间戳
+}
+
+message ReqFindTarget  // 索敌
+{
+  required int64 mId = 1;
+  required MonsterNetType type = 2;
+  required NetVector3 pos = 3;
+}
+
+message RspFindTarget
+{
+  required int64 mId = 1;
+  required int64 uid = 2;
+}

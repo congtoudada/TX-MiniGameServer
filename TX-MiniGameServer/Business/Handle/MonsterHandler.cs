@@ -7,6 +7,8 @@
 *****************************************************/
 
 
+using System.Collections.Generic;
+using System.Numerics;
 using System.Security.Principal;
 using PENet;
 
@@ -15,8 +17,8 @@ namespace MiniGameServer
     public partial class MsgHandler
     {
         public static long mid = 1;
+        
         #region GenMonster
-
         [GameMessage(Cmd.GenMonster)]
         public static void ReqGenMonsterHandle(MsgPack pack)
         {
@@ -30,7 +32,7 @@ namespace MiniGameServer
             {
                 return;  // 已经触发过的动作不再生效
             }
-            KcpLog.Log($"[MsgHandler] ReqGenMonsterHandle Success Handle GenType: {req.genType} ActionId: {req.actionId}");
+            KcpLog.Log($"[MsgHandler] ReqGenMonsterHandle Success Handle GenType: {req.genType} ActionId: {req.actionId} monsterIdx: {req.monsterIdx}");
 
             mid++; // 
 
@@ -66,6 +68,7 @@ namespace MiniGameServer
         }
         #endregion
         
+        #region AttackMonster
         [GameMessage(Cmd.AttackMonster)]
         public static void ReqAttackMonsterHandle(MsgPack pack)
         {
@@ -94,5 +97,99 @@ namespace MiniGameServer
             };
             room.Broadcast(pkg);
         }
+        #endregion
+        
+        #region SyncPosMonster
+
+        [GameMessage(Cmd.SyncPosMonster)]
+        public static void ReqSyncPosMonsterHandle(MsgPack pack)  // 仅限房主发送
+        {
+            // 准备
+            long uid = pack.GetUid();
+            var req = pack.Body.reqSyncPosMonster;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+
+            if (uid != room.GetOwnerUid())
+            {
+                KcpLog.Warn($"ReqSyncPosMonsterHandle仅限房主发送!: {uid} ownerUid: {room.GetOwnerUid()}");
+                return;
+            }
+
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.SyncPosMonster,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspSyncPosMonster = new RspSyncPosMonster()
+                    {
+                        Timestamp = req.Timestamp,
+                    }
+                }
+            };
+            List<RspSyncPosMonsterItem> rspList = new List<RspSyncPosMonsterItem>();
+            foreach (var item in req.reqLists)
+            {
+                if (item.uId == 0) continue;  // 没有索敌的怪不考虑
+                PlayerGameData pData = room.GetPlayer(item.uId);
+                Vector3 pos = MsgHandler.NetVtoV(item.Pos);
+                Vector3 target = pData.Position;
+                Vector3 dir = target - pos;
+                dir.Y = 0;
+                dir = Vector3.Normalize(dir);
+                // Vector3 move = dir * item.Speed * ServerConfig.Tick / 1000.0f;
+                Vector3 move = dir * item.Speed * ServerConfig.Tick / 1000.0f;
+                Vector3 targetPos = pos + move;
+
+                RspSyncPosMonsterItem rspItem = new RspSyncPosMonsterItem()
+                {
+                    targetPos = VtoNetV(targetPos),
+                    mId = item.mId,
+                    uId = item.uId
+                };
+                rspList.Add(rspItem);
+            }
+            pkg.Body.rspSyncPosMonster.rspLists.AddRange(rspList);
+            room.Broadcast(pkg);
+        }
+        #endregion
+        
+        #region FindTarget
+
+        [GameMessage(Cmd.MonsterFindTarget)]
+        public static void ReqMonsterFindTargetHandle(MsgPack pack)
+        {
+            // 测试:只锁房间第一个玩家
+            // 准备
+            long uid = pack.GetUid();
+            var req = pack.Body.reqFindTarget;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.MonsterFindTarget,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspFindTarget = new RspFindTarget()
+                    {
+                        mId = req.mId,
+                        Uid = room.GetOwnerUid()
+                    }
+                }
+            };
+            room.Broadcast(pkg);
+        }
+        #endregion
     }
 }

@@ -29,7 +29,7 @@ namespace MiniGameServer
         // }
         
         public Dictionary<long, PlayerGameData> Players = new Dictionary<long, PlayerGameData>();  // 房间内玩家列表
-        public List<long> OwnerList = new List<long>(); // 房主列表
+        public List<long> OwnerList = new List<long>(); // 房主列表(同时也表示进房顺序)
         public RoomState RoomState = RoomState.Ready;
         public HashSet<int> TriggeredActions = new HashSet<int>();
         
@@ -126,33 +126,20 @@ namespace MiniGameServer
             List<MatchInfo> infoList = new List<MatchInfo>(Players.Count);
             if (RoomState == RoomState.Ready)
             {
-                for (int i = 0; i < Players.Count; i++)
+                for (int i = 0; i < OwnerList.Count; i++)
                 {
-                    var player = Players[i];
-                    if (player.SysData != null)
+                    var player = Players.GetValueOrDefault(OwnerList[i]);
+                    if (player != null && player.SysData != null)
                     {
                         infoList.Add(new MatchInfo()
                         {
                             uId = player.SysData.Uid,
                             Nickname = player.SysData.Nickname,
                             isReady = player.IsMatchReady,
-                            roomOrder = i,
+                            roomOrder = i
                         });
                     }
                 }
-                
-                // foreach (var player in Players.Values)
-                // {
-                //     if (player.SysData != null)
-                //     {
-                //         infoList.Add(new MatchInfo()
-                //         {
-                //             uId = player.SysData.Uid,
-                //             Nickname = player.SysData.Nickname,
-                //             isReady = player.IsMatchReady,
-                //         });
-                //     }
-                // }
             }
             return infoList;
         }

@@ -85,7 +85,8 @@ namespace MiniGameServer
                     itemList.Add(new RspPlayerTickItem()
                     {
                         Uid = player.SysData.Uid,
-                        Position = MsgHandler.VtoNetV(player.Position)
+                        Position = MsgHandler.VtoNetV(player.Position),
+                        Rotation = MsgHandler.VtoNetV(player.Rotation),
                     });
                 }
                 pkg.Body.rspPlayerTick.itemLists.AddRange(itemList);

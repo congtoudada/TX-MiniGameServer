@@ -5,23 +5,23 @@ import "GameSystemPB.proto";
 import "GameMonster.proto";
 import "GamePlayerPB.proto";
 
-//=================Êý¾Ý°ü=================//
+//=================ï¿½ï¿½ï¿½Ý°ï¿½=================//
 message Pkg{
   required Head head = 1;
   optional Body body = 2;
 }
 
-//=================Êý¾ÝÍ·=================//
+//=================ï¿½ï¿½ï¿½ï¿½Í·=================//
 message Head{
   required int64 uid = 1;  // uid
-  required CMD cmd = 2;  // Ð­ÒéºÅ
-  required int64 seq = 3;  // ÐòÁÐºÅ
-  required Result result = 4;  // ´íÎóÂë
+  required CMD cmd = 2;  // Ð­ï¿½ï¿½ï¿½
+  required int64 seq = 3;  // ï¿½ï¿½ï¿½Ðºï¿½
+  required Result result = 4;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
-//=================Ð­ÒéÌå=================//
+//=================Ð­ï¿½ï¿½ï¿½ï¿½=================//
 message Body{
-  // ÏµÍ³´Ó1¿ªÊ¼
+  // ÏµÍ³ï¿½ï¿½1ï¿½ï¿½Ê¼
   optional ReqPing reqPing = 1;
   optional RspPing rspPing = 2;
   optional ReqJsonData reqJsonData = 3;
@@ -35,7 +35,7 @@ message Body{
   optional RspExitGame rspExitGame = 12;
   optional ReqLoadComplete reqLoadComplete = 13;
   optional RspLoadComplete rspLoadComplete = 14;
-  // Íæ·¨´Ó1000¿ªÊ¼
+  // ï¿½æ·¨ï¿½ï¿½1000ï¿½ï¿½Ê¼
   optional ReqEquip reqEquip = 1000;
   optional RspEquip rspEquip = 1001;
   optional ReqStartGame reqStartGame = 1002;
@@ -50,11 +50,15 @@ message Body{
   optional RspPlayerTick rspPlayerTick = 1011;
   optional ReqFindTarget reqFindTarget = 1012;
   optional RspFindTarget rspFindTarget = 1013;
+  optional ReqPlayerBullet reqPlayerBullet = 1014;
+  optional RspPlayerBullet rspPlayerBullet = 1015;
+  optional ReqPlayerRecoil reqPlayerRecoil = 1016;
+  optional RspPlayerRecoil rspPlayerRecoil = 1017;
 }
 
-//=================Ð­ÒéºÅ=================//
+//=================Ð­ï¿½ï¿½ï¿½=================//
 enum CMD {
-  //=================ÏµÍ³´Ó1¿ªÊ¼=================//
+  //=================ÏµÍ³ï¿½ï¿½1ï¿½ï¿½Ê¼=================//
   Ping = 1;
   Json = 2;
   Login = 3;
@@ -62,7 +66,7 @@ enum CMD {
   Kick = 5;
   ExitGame = 6;
   LoadComplete = 7;
-  //=================Íæ·¨´Ó1000¿ªÊ¼=================//
+  //=================ï¿½æ·¨ï¿½ï¿½1000ï¿½ï¿½Ê¼=================//
   Equip = 1000;
   StartGame = 1001;
   GenMonster = 1002;
@@ -70,16 +74,18 @@ enum CMD {
   SyncPosMonster = 1004;
   PlayerTick = 1005;
   MonsterFindTarget = 1006;
+  PlayerBullet = 1007;
+    Recoil = 1008;
 }
 
-//=================·µ»ØÖµ=================//
+//=================ï¿½ï¿½ï¿½ï¿½Öµ=================//
 enum Result {
   Success = 0;
-  //=================ÏµÍ³´Ó1¿ªÊ¼=================//
-  HasBeenRegistered = 1;  // ÒÑ¾­×¢²á
-  HasOnline = 2;  // ÒÑ¾­ÔÚÏß
-  RoomBusy = 3;  // ·¿¼äÒÑÔÚÓÎÏ·ÖÐ
-  RoomFull = 4;  // ·¿¼äÂúÈË
-  //=================Íæ·¨´Ó1000¿ªÊ¼=================//
+  //=================ÏµÍ³ï¿½ï¿½1ï¿½ï¿½Ê¼=================//
+  HasBeenRegistered = 1;  // ï¿½Ñ¾ï¿½×¢ï¿½ï¿½
+  HasOnline = 2;  // ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
+  RoomBusy = 3;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½
+  RoomFull = 4;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  //=================ï¿½æ·¨ï¿½ï¿½1000ï¿½ï¿½Ê¼=================//
 }
 

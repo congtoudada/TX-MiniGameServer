@@ -14,6 +14,8 @@ import "GamePlayPB.proto";
 message ReqPlayerTick  // 局内玩家同步
 {
   required NetVector3 position = 1;
+  required NetVector3 rotation = 2;
+  
   // 开火...
 }
 
@@ -21,9 +23,50 @@ message RspPlayerTickItem
 {
   required int64 uid = 1;
   required NetVector3 position = 2;
+  required NetVector3 rotation = 3;
 }
 
 message RspPlayerTick
 {
   repeated RspPlayerTickItem itemList = 1; 
+}
+
+message ReqPlayerBullet  // 玩家发射子弹请求
+{
+  required int64 uid = 1;            // 子弹 uid
+  required NetVector3 position = 2;  // 子弹初始位置
+  required NetVector3 dir = 3;       // 子弹方向（归一化）
+  required float flyVelocity = 4;    // 飞行速度
+  required float lifeTime = 5;       // 子弹存活时间
+  required int32 bulletType = 6;     // 子弹类型
+}
+
+message RspPlayerBullet
+{
+  required int64 uid = 1;            // 子弹 uid
+  required NetVector3 position = 2;  // 子弹初始位置
+  required NetVector3 dir = 3;       // 子弹方向（归一化）
+  required float flyVelocity = 4;    // 飞行速度
+  required float lifeTime = 5;       // 子弹存活时间
+  required int32 bulletType = 6;     // 子弹类型
+}
+
+// 玩家触发后坐力请求
+message ReqPlayerRecoil {
+  required int64 uid = 1;                 // 玩家 uid
+  required NetVector3 direction = 2;      // 后坐力方向（归一化）
+  required float initialSpeed = 3;        // 初始速度
+  required float recoilAcceleration = 4;  // 加速度
+  required float burstTime = 5;           // 持续时间
+  required float slideVelocity = 6;       // 滑移速度
+}
+
+// 服务器广播/响应后坐力
+message RspPlayerRecoil {
+  required int64 uid = 1;                 // 玩家 uid
+  required NetVector3 direction = 2;      // 后坐力方向（归一化）
+  required float initialSpeed = 3;        // 初始速度
+  required float recoilAcceleration = 4;  // 加速度
+  required float burstTime = 5;           // 持续时间
+  required float slideVelocity = 6;       // 滑移速度
 }

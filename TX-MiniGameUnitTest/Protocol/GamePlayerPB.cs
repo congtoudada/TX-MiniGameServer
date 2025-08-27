@@ -13,6 +13,9 @@ public partial class ReqPlayerTick : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1, Name = @"position", IsRequired = true)]
     public NetVector3 Position { get; set; }
 
+    [global::ProtoBuf.ProtoMember(2, Name = @"rotation", IsRequired = true)]
+    public NetVector3 Rotation { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -28,6 +31,9 @@ public partial class RspPlayerTickItem : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(2, Name = @"position", IsRequired = true)]
     public NetVector3 Position { get; set; }
 
+    [global::ProtoBuf.ProtoMember(3, Name = @"rotation", IsRequired = true)]
+    public NetVector3 Rotation { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -39,6 +45,114 @@ public partial class RspPlayerTick : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(1, Name = @"itemList")]
     public global::System.Collections.Generic.List<RspPlayerTickItem> itemLists { get; } = new global::System.Collections.Generic.List<RspPlayerTickItem>();
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqPlayerBullet : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"position", IsRequired = true)]
+    public NetVector3 Position { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"dir", IsRequired = true)]
+    public NetVector3 Dir { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
+    public float flyVelocity { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
+    public float lifeTime { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
+    public int bulletType { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspPlayerBullet : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"position", IsRequired = true)]
+    public NetVector3 Position { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"dir", IsRequired = true)]
+    public NetVector3 Dir { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
+    public float flyVelocity { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
+    public float lifeTime { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
+    public int bulletType { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqPlayerRecoil : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"direction", IsRequired = true)]
+    public NetVector3 Direction { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public float initialSpeed { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
+    public float recoilAcceleration { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
+    public float burstTime { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
+    public float slideVelocity { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspPlayerRecoil : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"direction", IsRequired = true)]
+    public NetVector3 Direction { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public float initialSpeed { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
+    public float recoilAcceleration { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
+    public float burstTime { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
+    public float slideVelocity { get; set; }
 
 }
 

@@ -21,5 +21,6 @@ namespace MiniGameServer
         public bool IsGameReady;  // 装备结束，是否准备就绪
 
         public Vector3 Position;
+        public Vector3 Rotation;
     }
 }

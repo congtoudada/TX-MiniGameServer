@@ -127,6 +127,18 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1013)]
     public RspFindTarget rspFindTarget { get; set; }
 
+    [global::ProtoBuf.ProtoMember(1014)]
+    public ReqPlayerBullet reqPlayerBullet { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1015)]
+    public RspPlayerBullet rspPlayerBullet { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1016)]
+    public ReqPlayerRecoil reqPlayerRecoil { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1017)]
+    public RspPlayerRecoil rspPlayerRecoil { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract(Name = @"CMD")]
@@ -146,6 +158,8 @@ public enum Cmd
     SyncPosMonster = 1004,
     PlayerTick = 1005,
     MonsterFindTarget = 1006,
+    PlayerBullet = 1007,
+    Recoil = 1008,
 }
 
 [global::ProtoBuf.ProtoContract()]

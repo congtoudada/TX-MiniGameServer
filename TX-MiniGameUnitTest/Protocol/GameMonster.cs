@@ -67,8 +67,20 @@ public partial class ReqAttackMonster : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
     public long mId { get; set; }
 
-    [global::ProtoBuf.ProtoMember(2, Name = @"damage", IsRequired = true)]
-    public float Damage { get; set; }
+    [global::ProtoBuf.ProtoMember(2, Name = @"dir", IsRequired = true)]
+    public NetVector3 Dir { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"dis", IsRequired = true)]
+    public float Dis { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, Name = @"hp", IsRequired = true)]
+    public float Hp { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, Name = @"sp", IsRequired = true)]
+    public float Sp { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6, Name = @"duration", IsRequired = true)]
+    public float Duration { get; set; }
 
 }
 
@@ -82,8 +94,20 @@ public partial class RspAttackMonster : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
     public long mId { get; set; }
 
-    [global::ProtoBuf.ProtoMember(2, Name = @"damage", IsRequired = true)]
-    public float Damage { get; set; }
+    [global::ProtoBuf.ProtoMember(2, Name = @"dir", IsRequired = true)]
+    public NetVector3 Dir { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"dis", IsRequired = true)]
+    public float Dis { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, Name = @"hp", IsRequired = true)]
+    public float Hp { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5, Name = @"sp", IsRequired = true)]
+    public float Sp { get; set; }
+
+    [global::ProtoBuf.ProtoMember(6, Name = @"duration", IsRequired = true)]
+    public float Duration { get; set; }
 
 }
 

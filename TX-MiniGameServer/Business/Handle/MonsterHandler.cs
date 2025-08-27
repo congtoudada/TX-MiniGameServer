@@ -91,7 +91,11 @@ namespace MiniGameServer
                     rspAttackMonster = new RspAttackMonster()
                     {
                         mId = req.mId,
-                        Damage = req.Damage,
+                        Dir = req.Dir,
+                        Dis = req.Dis,
+                        Hp = req.Hp,
+                        Sp = req.Sp,
+                        Duration = req.Duration
                     }
                 }
             };

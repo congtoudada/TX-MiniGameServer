@@ -211,8 +211,8 @@ namespace MiniGameServer
             {
                 var playerPos = player.Position;
                 var start = NetVtoV(req.Pos);
-                var diff = playerPos - start;
-                var target = start + diff * 2.5f;
+                var dir = playerPos - start;
+                var target = start + Vector3.Normalize(dir) * req.Dis;
                 target.Y = 0;
                 Pkg pkg = new Pkg()
                 {

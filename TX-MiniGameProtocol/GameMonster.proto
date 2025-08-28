@@ -97,6 +97,7 @@ message ReqMonsterDash  // ³å´Ì
   required int64 mId = 1;
   required int64 uId = 2;
   required NetVector3 pos = 3;
+  required float dis = 4;
 }
 
 message RspMonsterDash

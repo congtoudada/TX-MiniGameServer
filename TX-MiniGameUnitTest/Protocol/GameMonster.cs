@@ -232,6 +232,9 @@ public partial class ReqMonsterDash : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(3, Name = @"pos", IsRequired = true)]
     public NetVector3 Pos { get; set; }
 
+    [global::ProtoBuf.ProtoMember(4, Name = @"dis", IsRequired = true)]
+    public float Dis { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]

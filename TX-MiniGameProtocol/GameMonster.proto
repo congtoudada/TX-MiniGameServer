@@ -12,23 +12,23 @@ enum MonsterNetType
 message ReqGenMonster  // 刷怪
 {
   required int32 actionId = 1;  // 动作id
-  required int32 monsterIdx = 2;  // 怪物配置索引
-  required int32 genCount = 3;  // 生成数量
+//  required int32 monsterIdx = 2;  // 怪物配置索引
+  required int32 genCount = 2;  // 生成数量
 //  required float genDelay = 4;  // 生成延迟
 //  required float genInterval = 4;  // 生成间隔
-  required NetVector3 genPos = 4;  // 生成位置
-  required NetVector3 genRotate = 5;  // 生成旋转
-  required int32 genType = 6; // 刷怪触发方式(Debug)
+//  required NetVector3 genPos = 4;  // 生成位置
+//  required NetVector3 genRotate = 5;  // 生成旋转
+  required int32 genType = 3; // 刷怪触发方式(Debug)
 }
 
 message RspGenMonster
 {
   required int32 actionId = 1;
-  required int32 monsterIdx = 2;
-  required int32 genCount = 3;
-  required NetVector3 genPos = 4;  // 生成位置
-  required NetVector3 genRotate = 5;  // 生成旋转
-  required int64 mId = 6; // 怪物id
+//  required int32 monsterIdx = 2;
+//  required int32 genCount = 2;
+//  required NetVector3 genPos = 4;  // 生成位置
+//  required NetVector3 genRotate = 5;  // 生成旋转
+  required int64 mId = 2; // 怪物id(第一只)
 }
 
 message ReqAttackMonster  // 打怪

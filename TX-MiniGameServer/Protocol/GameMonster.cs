@@ -14,18 +14,9 @@ public partial class ReqGenMonster : global::ProtoBuf.IExtensible
     public int actionId { get; set; }
 
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
-    public int monsterIdx { get; set; }
-
-    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
     public int genCount { get; set; }
 
-    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
-    public NetVector3 genPos { get; set; }
-
-    [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
-    public NetVector3 genRotate { get; set; }
-
-    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
     public int genType { get; set; }
 
 }
@@ -41,18 +32,6 @@ public partial class RspGenMonster : global::ProtoBuf.IExtensible
     public int actionId { get; set; }
 
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
-    public int monsterIdx { get; set; }
-
-    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
-    public int genCount { get; set; }
-
-    [global::ProtoBuf.ProtoMember(4, IsRequired = true)]
-    public NetVector3 genPos { get; set; }
-
-    [global::ProtoBuf.ProtoMember(5, IsRequired = true)]
-    public NetVector3 genRotate { get; set; }
-
-    [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
     public long mId { get; set; }
 
 }

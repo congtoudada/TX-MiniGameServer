@@ -33,9 +33,10 @@ namespace MiniGameServer
         public RoomState RoomState = RoomState.Ready;
         public HashSet<int> TriggeredActions = new HashSet<int>();
         
-        public Dictionary<long, MonsterData> Monsters = new Dictionary<long, MonsterData>();  // 怪物列表
+        // public Dictionary<long, MonsterData> Monsters = new Dictionary<long, MonsterData>();  // 怪物列表
         // public List<GenActionPackage> GenMonsterCache = new List<GenActionPackage>();
         public int RoomId;
+        public long MId = 0;
 
         public Room(int roomId)
         {

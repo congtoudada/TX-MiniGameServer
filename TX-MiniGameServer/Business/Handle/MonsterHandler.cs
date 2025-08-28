@@ -16,8 +16,6 @@ namespace MiniGameServer
 {
     public partial class MsgHandler
     {
-        public static long mid = 1;
-        
         #region GenMonster
         [GameMessage(Cmd.GenMonster)]
         public static void ReqGenMonsterHandle(MsgPack pack)
@@ -32,13 +30,21 @@ namespace MiniGameServer
             {
                 return;  // 已经触发过的动作不再生效
             }
-            KcpLog.Log($"[MsgHandler] ReqGenMonsterHandle Success Handle GenType: {req.genType} ActionId: {req.actionId} monsterIdx: {req.monsterIdx}");
+            KcpLog.Log($"[MsgHandler] ReqGenMonsterHandle Success Handle GenType: {req.genType} ActionId: {req.actionId} genCount: {req.genCount}");
+            long retMId = 0;
+            for (int i = 0; i < req.genCount; i++)
+            {
+                room.MId++;
+                if (i == 0)
+                {
+                    retMId = room.MId;
+                }
+                // room.Monsters.Add(room.MId, new MonsterData(Vector3.Zero, Vector3.Zero));
+            }
 
-            mid++; // 
-
-            MonsterData monsData = new MonsterData(100, NetVtoV(req.genPos), NetVtoV(req.genRotate));
+            // MonsterData monsData = new MonsterData(100, NetVtoV(req.genPos), NetVtoV(req.genRotate));
             
-            room.Monsters.Add(mid, monsData);
+            // room.Monsters.Add(mid, monsData);
 
             room.TriggeredActions.Add(req.actionId);
             // 广播
@@ -55,12 +61,11 @@ namespace MiniGameServer
                     rspGenMonster = new RspGenMonster()
                     {
                         actionId = req.actionId,
-                        monsterIdx = req.monsterIdx,
-                        
-                        genCount = 1,//req.genCount,
-                        genPos = req.genPos,
-                        genRotate = req.genRotate,
-                        mId = mid,
+                        // monsterIdx = req.monsterIdx,
+                        // genCount = 1,//req.genCount,
+                        // genPos = req.genPos,
+                        // genRotate = req.genRotate,
+                        mId = retMId,
                     }
                 }
             };

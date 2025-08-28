@@ -23,7 +23,7 @@ namespace MiniGameServer
             Room room = RoomSvc.Instance.GetRoomByUid(uid);
             // 记录
             data.Position = NetVtoV(req.Position);
-            data.Rotation = NetVtoV(req.Rotation);
+            // data.Rotation = NetVtoV(req.Rotation);
             // 广播(写EventHandler，定时自动广播)
         }
         #endregion

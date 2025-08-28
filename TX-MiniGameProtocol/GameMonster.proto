@@ -91,3 +91,16 @@ message RspFindTarget
   required int64 mId = 1;
   required int64 uid = 2;
 }
+
+message ReqMonsterDash  // ³å´Ì
+{
+  required int64 mId = 1;
+  required int64 uId = 2;
+  required NetVector3 pos = 3;
+}
+
+message RspMonsterDash
+{
+  required int64 mId = 1;
+  required NetVector3 target = 2;
+}

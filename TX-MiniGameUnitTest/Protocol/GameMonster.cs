@@ -217,6 +217,39 @@ public partial class RspFindTarget : global::ProtoBuf.IExtensible
 }
 
 [global::ProtoBuf.ProtoContract()]
+public partial class ReqMonsterDash : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public long uId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"pos", IsRequired = true)]
+    public NetVector3 Pos { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspMonsterDash : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"target", IsRequired = true)]
+    public NetVector3 Target { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
 public enum MonsterNetType
 {
     Idle = 1,

@@ -193,7 +193,7 @@ namespace MiniGameServer
                     rspFindTarget = new RspFindTarget()
                     {
                         mId = req.mId,
-                        Uid = room.GetOwnerUid()
+                        Uid = room.GetRandomUid()
                     }
                 }
             };

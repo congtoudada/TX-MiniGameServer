@@ -7,6 +7,8 @@
 *****************************************************/
 
 using System.Collections.Generic;
+using PENet;
+using Xamarin.Forms.Internals;
 
 namespace MiniGameServer
 {
@@ -107,6 +109,36 @@ namespace MiniGameServer
                 }
             };
             BroadcastRoom(uid, pkg);
+        }
+        #endregion
+        
+        #region GetProp
+        [GameMessage(Cmd.GetProp)]
+        public static void ReqGetPropHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            var req = pack.Body.reqGetProp;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            KcpLog.Log($"[ReqGetPropHandle] PlayerUid: {uid} Get PropId: {req.propId} PropType: {req.propType}");
+            // 记录
+            room.Broadcast(new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.GetProp,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspGetProp = new RspGetProp()
+                    {
+                        propId = req.propId,
+                    }
+                }
+            });
         }
         #endregion
     }

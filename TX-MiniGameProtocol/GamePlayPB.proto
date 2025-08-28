@@ -46,3 +46,14 @@ message RspStartGame
 {
   repeated int64 readyList = 1;  // 已经就绪的玩家id
 }
+
+message ReqGetProp
+{
+  required int32 propId = 1;
+  required int32 propType = 2;
+}
+
+message RspGetProp
+{
+  required int32 propId = 1;
+}

@@ -168,5 +168,19 @@ namespace MiniGameServer
             pkg.Body.rspMatch.matchInfoLists.AddRange(GetMatchInfoList());
             Broadcast(pkg);
         }
+
+        private static readonly Random _rand = new Random();
+
+        public long GetRandomUid()
+        {
+            if (Players.Count == 0)
+            {
+                return 0;
+            }
+
+            var uids = Players.Keys.ToList();
+            int idx = _rand.Next(uids.Count);
+            return uids[idx];
+        }
     }
 }

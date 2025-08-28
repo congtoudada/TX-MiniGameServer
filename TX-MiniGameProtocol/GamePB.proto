@@ -58,6 +58,8 @@ message Body{
   optional RspMonsterDash rspMonsterDash = 1019;
   optional ReqPlayerHit reqPlayerHit = 1020;
   optional RspPlayerHit rspPlayerHit = 1021;
+  optional ReqGetProp reqGetProp = 1022;
+  optional RspGetProp rspGetProp = 1023;
 }
 
 //=================Э���=================//
@@ -82,6 +84,7 @@ enum CMD {
   Recoil = 1008;
   MonsterDash = 1009;
   PlayerHit = 1010;
+  GetProp = 1011;
 }
 
 //=================����ֵ=================//

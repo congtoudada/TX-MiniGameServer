@@ -151,6 +151,12 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1021)]
     public RspPlayerHit rspPlayerHit { get; set; }
 
+    [global::ProtoBuf.ProtoMember(1022)]
+    public ReqGetProp reqGetProp { get; set; }
+
+    [global::ProtoBuf.ProtoMember(1023)]
+    public RspGetProp rspGetProp { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract(Name = @"CMD")]
@@ -174,6 +180,7 @@ public enum Cmd
     Recoil = 1008,
     MonsterDash = 1009,
     PlayerHit = 1010,
+    GetProp = 1011,
 }
 
 [global::ProtoBuf.ProtoContract()]

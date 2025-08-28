@@ -54,6 +54,8 @@ message Body{
   optional RspPlayerBullet rspPlayerBullet = 1015;
   optional ReqPlayerRecoil reqPlayerRecoil = 1016;
   optional RspPlayerRecoil rspPlayerRecoil = 1017;
+  optional ReqMonsterDash reqMonsterDash = 1018;
+  optional RspMonsterDash rspMonsterDash = 1019;
 }
 
 //=================Э���=================//
@@ -75,7 +77,8 @@ enum CMD {
   PlayerTick = 1005;
   MonsterFindTarget = 1006;
   PlayerBullet = 1007;
-    Recoil = 1008;
+  Recoil = 1008;
+  MonsterDash = 1009;
 }
 
 //=================����ֵ=================//

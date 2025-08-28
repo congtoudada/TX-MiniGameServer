@@ -195,5 +195,46 @@ namespace MiniGameServer
             room.Broadcast(pkg);
         }
         #endregion
+        
+        #region Dash
+        [GameMessage(Cmd.MonsterDash)]
+        public static void ReqMonsterDashHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            var req = pack.Body.reqMonsterDash;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+
+            var player = room.GetPlayer(req.uId);
+            if (player != null)
+            {
+                var playerPos = player.Position;
+                var start = NetVtoV(req.Pos);
+                var diff = playerPos - start;
+                var target = start + diff * 2.5f;
+                target.Y = 0;
+                Pkg pkg = new Pkg()
+                {
+                    Head = new Head()
+                    {
+                        Uid = uid,
+                        Cmd = Cmd.MonsterDash,
+                        Result = Result.Success
+                    },
+                    Body = new Body()
+                    {
+                        rspMonsterDash = new RspMonsterDash()
+                        {
+                            mId = req.mId,
+                            Target = VtoNetV(target)
+                        }
+                    }
+                };
+                room.Broadcast(pkg);
+            }
+        }
+        
+        #endregion
     }
 }

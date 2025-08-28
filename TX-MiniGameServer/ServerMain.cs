@@ -9,9 +9,14 @@ namespace MiniGameServer
         {
             ServerLauncher launcher = new ServerLauncher();
             launcher.Init();
-            while(true) {
+            long begin;
+            int sleepTime;
+            while(true)
+            {
+                begin = NetSvc.GetTimeStamp();
                 launcher.Update();
-                Thread.Sleep(ServerConfig.Tick);
+                sleepTime = (int)Math.Max(0, ServerConfig.Tick - (NetSvc.GetTimeStamp() - begin));
+                Thread.Sleep(sleepTime);
             }
         }
     }

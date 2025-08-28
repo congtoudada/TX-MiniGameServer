@@ -94,5 +94,41 @@ namespace MiniGameServer
 
             room.Broadcast(pkg);
         }
+        
+        
+        [GameMessage(Cmd.PlayerHit)]
+        public static void ReqPlayerHitHandle(MsgPack pack)
+        {
+            long uid = pack.GetUid();
+            var req = pack.Body.reqPlayerHit;
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+
+            // 构造广播包：某个玩家受击了
+            Pkg pkg = new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.PlayerHit,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspPlayerHit = new RspPlayerHit()
+                    {
+                        Uid = req.Uid,
+                        Direction = req.Direction,
+                        knockbackDistance = req.knockbackDistance,
+                        Damage = req.Damage,
+                        invincibleTime = req.invincibleTime // optional 字段，可能为空
+                    }
+                }
+            };
+
+            // 广播给房间内所有玩家
+            room.Broadcast(pkg);
+        }
+
+
     }
 }

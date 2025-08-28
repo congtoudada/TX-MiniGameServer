@@ -156,4 +156,66 @@ public partial class RspPlayerRecoil : global::ProtoBuf.IExtensible
 
 }
 
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqPlayerHit : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"direction", IsRequired = true)]
+    public NetVector3 Direction { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public float knockbackDistance { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, Name = @"damage", IsRequired = true)]
+    public float Damage { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5)]
+    public float invincibleTime
+    {
+        get { return __pbn__invincibleTime.GetValueOrDefault(); }
+        set { __pbn__invincibleTime = value; }
+    }
+    public bool ShouldSerializeinvincibleTime() => __pbn__invincibleTime != null;
+    public void ResetinvincibleTime() => __pbn__invincibleTime = null;
+    private float? __pbn__invincibleTime;
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspPlayerHit : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"uid", IsRequired = true)]
+    public long Uid { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"direction", IsRequired = true)]
+    public NetVector3 Direction { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public float knockbackDistance { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, Name = @"damage", IsRequired = true)]
+    public float Damage { get; set; }
+
+    [global::ProtoBuf.ProtoMember(5)]
+    public float invincibleTime
+    {
+        get { return __pbn__invincibleTime.GetValueOrDefault(); }
+        set { __pbn__invincibleTime = value; }
+    }
+    public bool ShouldSerializeinvincibleTime() => __pbn__invincibleTime != null;
+    public void ResetinvincibleTime() => __pbn__invincibleTime = null;
+    private float? __pbn__invincibleTime;
+
+}
+
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

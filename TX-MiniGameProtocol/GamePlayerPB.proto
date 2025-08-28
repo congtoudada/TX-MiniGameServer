@@ -70,3 +70,21 @@ message RspPlayerRecoil {
   required float burstTime = 5;           // 持续时间
   required float slideVelocity = 6;       // 滑移速度
 }
+
+// 玩家受击请求
+message ReqPlayerHit {
+  required int64 uid = 1;                 // 玩家 uid
+  required NetVector3 direction = 2;      // 受击方向（归一化）
+  required float knockbackDistance = 3;   // 击退距离
+  required float damage = 4;              // 造成的伤害
+  optional float invincibleTime = 5;      // 受击后无敌时间
+}
+
+// 服务器广播/响应玩家受击
+message RspPlayerHit {
+  required int64 uid = 1;                 // 玩家 uid
+  required NetVector3 direction = 2;      // 受击方向（归一化）
+  required float knockbackDistance = 3;   // 击退距离
+  required float damage = 4;              // 造成的伤害
+  optional float invincibleTime = 5;      // 受击后无敌时间
+}

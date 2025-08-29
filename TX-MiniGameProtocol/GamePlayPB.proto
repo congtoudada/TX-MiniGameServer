@@ -47,7 +47,20 @@ message RspStartGame
   repeated int64 readyList = 1;  // 已经就绪的玩家id
 }
 
-message ReqGetProp
+message ReqGenerateProp  // 生成道具
+{
+  required int32 propIndex = 1;  // 道具配置索引
+  required NetVector3 pos = 2;  // 生成位置
+}
+
+message RspGenerateProp
+{
+  required int32 propId = 1;  // 道具Id
+  required int32 propIndex = 2;  // 道具配置索引
+  required NetVector3 pos = 3;  // 生成位置
+}
+
+message ReqGetProp  // 拾取道具
 {
   required int32 propId = 1;
   required int32 propType = 2;

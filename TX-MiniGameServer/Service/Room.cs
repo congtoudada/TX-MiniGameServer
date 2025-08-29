@@ -37,6 +37,7 @@ namespace MiniGameServer
         // public List<GenActionPackage> GenMonsterCache = new List<GenActionPackage>();
         public int RoomId;
         public long MId = 0;
+        public int PropId = 0;
 
         public Room(int roomId)
         {

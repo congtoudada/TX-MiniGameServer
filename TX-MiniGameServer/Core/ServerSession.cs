@@ -22,7 +22,9 @@ namespace MiniGameServer
         {
             Cmd.Ping,
             Cmd.PlayerTick,
-            Cmd.SyncPosMonster
+            Cmd.SyncPosMonster,
+            Cmd.PlayerBullet,
+            Cmd.Recoil
         };
 
         public PlayerSysData PlayerSysData { get; } = new PlayerSysData();

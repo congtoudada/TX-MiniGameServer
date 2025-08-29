@@ -112,6 +112,41 @@ namespace MiniGameServer
         }
         #endregion
         
+        #region GenerateProp
+
+        [GameMessage(Cmd.GenerateProp)]
+        public static void ReqGeneratePropHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            var req = pack.Body.reqGenerateProp;
+            var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+            KcpLog.Log($"[ReqGeneratePropHandle] PlayerUid: {uid} Get PropIndex: {req.propIndex}");
+            // 记录
+            room.PropId++;
+            room.Broadcast(new Pkg()
+            {
+                Head = new Head()
+                {
+                    Uid = uid,
+                    Cmd = Cmd.GenerateProp,
+                    Result = Result.Success
+                },
+                Body = new Body()
+                {
+                    rspGenerateProp = new RspGenerateProp()
+                    {
+                        propId = room.PropId,
+                        propIndex = req.propIndex,
+                        Pos = req.Pos
+                    }
+                }
+            });
+        }
+
+        #endregion
+        
         #region GetProp
         [GameMessage(Cmd.GetProp)]
         public static void ReqGetPropHandle(MsgPack pack)

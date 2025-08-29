@@ -79,6 +79,39 @@ public partial class RspStartGame : global::ProtoBuf.IExtensible
 }
 
 [global::ProtoBuf.ProtoContract()]
+public partial class ReqGenerateProp : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public int propIndex { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"pos", IsRequired = true)]
+    public NetVector3 Pos { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspGenerateProp : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
+    public int propId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public int propIndex { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3, Name = @"pos", IsRequired = true)]
+    public NetVector3 Pos { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
 public partial class ReqGetProp : global::ProtoBuf.IExtensible
 {
     private global::ProtoBuf.IExtension __pbn__extensionData;

@@ -15,7 +15,7 @@ message ReqPlayerTick  // 局内玩家同步
 {
   required NetVector3 position = 1;
   required NetVector3 rotation = 2;
-  
+  required NetVector3 raftposition = 3;
   // 开火...
 }
 
@@ -24,6 +24,7 @@ message RspPlayerTickItem
   required int64 uid = 1;
   required NetVector3 position = 2;
   required NetVector3 rotation = 3;
+  required NetVector3 raftposition = 4;
 }
 
 message RspPlayerTick

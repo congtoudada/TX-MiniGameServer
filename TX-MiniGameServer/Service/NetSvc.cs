@@ -24,7 +24,7 @@ namespace MiniGameServer {
     public class NetSvc : Singleton<NetSvc> {
         public static readonly string PkgQueueLock = "PkgQueueLock";
         public KcpServerDriver<ServerSession, Pkg> ServerDriver { get; private set; } = new KcpServerDriver<ServerSession, Pkg>();
-        private readonly Queue<MsgPack> _msgPackQue = new Queue<MsgPack>();
+        private readonly Queue<MsgPack> _msgPackQue = new Queue<MsgPack>(1024);
         private Dictionary<Cmd, MsgListener> _msgListeners = new Dictionary<Cmd, MsgListener>();
         private List<EventPack> _eventListeners = new List<EventPack>();
         private CancellationTokenSource cts;

@@ -16,6 +16,9 @@ public partial class ReqPlayerTick : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(2, Name = @"rotation", IsRequired = true)]
     public NetVector3 Rotation { get; set; }
 
+    [global::ProtoBuf.ProtoMember(3, Name = @"raftposition", IsRequired = true)]
+    public NetVector3 Raftposition { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -33,6 +36,9 @@ public partial class RspPlayerTickItem : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(3, Name = @"rotation", IsRequired = true)]
     public NetVector3 Rotation { get; set; }
+
+    [global::ProtoBuf.ProtoMember(4, Name = @"raftposition", IsRequired = true)]
+    public NetVector3 Raftposition { get; set; }
 
 }
 

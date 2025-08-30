@@ -24,6 +24,7 @@ namespace MiniGameServer
             // 记录
             data.Position = NetVtoV(req.Position);
             // data.Rotation = NetVtoV(req.Rotation);
+            data.RaftPosition = NetVtoV(req.Raftposition);
             // 广播(写EventHandler，定时自动广播)
         }
         #endregion

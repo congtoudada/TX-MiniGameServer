@@ -59,7 +59,7 @@ namespace MiniGameServer
             }
         }
 
-        [EventMessage(ServerConfig.Tick)]
+        [EventMessage(ServerConfig.EventHandleFps)]
         public static void BroadcastPlayerStatus()
         {
             foreach (var room in RoomSvc.Instance.Rooms.Values)
@@ -87,6 +87,7 @@ namespace MiniGameServer
                         Uid = player.SysData.Uid,
                         Position = MsgHandler.VtoNetV(player.Position),
                         Rotation = MsgHandler.VtoNetV(player.Rotation),
+                        Raftposition = MsgHandler.VtoNetV(player.RaftPosition),
                     });
                 }
                 pkg.Body.rspPlayerTick.itemLists.AddRange(itemList);

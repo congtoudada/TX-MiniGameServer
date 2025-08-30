@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+import "GamePlayPB.proto";
+
+message ReqBossAction  // BossĞĞÎª
+{
+  required int32 stateId = 1;  // ×´Ì¬id
+  required int64 target = 2;  // Ë÷µĞÍæ¼Ò
+  required int32 settingIdx = 3;  // ÅäÖÃË÷Òı
+}
+
+message RspBossAction
+{
+  required int32 stateId = 1;  // ×´Ì¬id
+  required int64 target = 2;  // Ë÷µĞÍæ¼Ò
+  required int32 settingIdx = 3;  // ÅäÖÃË÷Òı
+}

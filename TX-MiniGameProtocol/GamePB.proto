@@ -4,6 +4,7 @@ import "GamePlayPB.proto";
 import "GameSystemPB.proto";
 import "GameMonster.proto";
 import "GamePlayerPB.proto";
+import "GameBoss.proto";
 
 //=================���ݰ�=================//
 message Pkg{
@@ -62,6 +63,8 @@ message Body{
   optional RspGenerateProp rspGenerateProp = 1023;
   optional ReqGetProp reqGetProp = 1024;
   optional RspGetProp rspGetProp = 1025;
+  optional ReqBossAction reqBossAction = 1026;
+  optional RspBossAction rspBossAction = 1027;
 }
 
 //=================Э���=================//
@@ -88,6 +91,7 @@ enum CMD {
   PlayerHit = 1010;
   GenerateProp = 1011;
   GetProp = 1012;
+  BossAction = 1013;
 }
 
 //=================����ֵ=================//

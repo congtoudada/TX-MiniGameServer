@@ -59,7 +59,7 @@ namespace MiniGameServer
             }
         }
 
-        [EventMessage(ServerConfig.EventHandleFps)]
+        [EventMessage(ServerConfig.BroadcastStatusFrequency)]
         public static void BroadcastPlayerStatus()
         {
             foreach (var room in RoomSvc.Instance.Rooms.Values)

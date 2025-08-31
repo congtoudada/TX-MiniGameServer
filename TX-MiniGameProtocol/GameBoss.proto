@@ -15,3 +15,13 @@ message RspBossAction
   required int64 target = 2;  // 索敌玩家
   required int32 settingIdx = 3;  // 配置索引
 }
+
+message ReqAttackBoss  // 打Boss
+{
+  required float hp = 1;  // 伤害值
+}
+
+message RspAttackBoss
+{
+  required float hp = 1;  // 伤害值
+}

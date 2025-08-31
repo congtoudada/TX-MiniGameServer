@@ -18,6 +18,9 @@ namespace MiniGameServer {
         // public const string Ip = "111.229.199.15";
         // public const string InnerIp = "10.0.12.9";
         // 本地
+        // public const string Ip = "127.0.0.1";
+        // public const string InnerIp = "127.0.0.1";
+        // 内网
         public const string Ip = "127.0.0.1";
         public const string InnerIp = "127.0.0.1";
         public const int Port = 17666;

@@ -39,4 +39,28 @@ public partial class RspBossAction : global::ProtoBuf.IExtensible
 
 }
 
+[global::ProtoBuf.ProtoContract()]
+public partial class ReqAttackBoss : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"hp", IsRequired = true)]
+    public float Hp { get; set; }
+
+}
+
+[global::ProtoBuf.ProtoContract()]
+public partial class RspAttackBoss : global::ProtoBuf.IExtensible
+{
+    private global::ProtoBuf.IExtension __pbn__extensionData;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+        => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    [global::ProtoBuf.ProtoMember(1, Name = @"hp", IsRequired = true)]
+    public float Hp { get; set; }
+
+}
+
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

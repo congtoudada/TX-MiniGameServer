@@ -65,6 +65,8 @@ message Body{
   optional RspGetProp rspGetProp = 1025;
   optional ReqBossAction reqBossAction = 1026;
   optional RspBossAction rspBossAction = 1027;
+  optional ReqAttackBoss reqAttackBoss = 1028;
+  optional RspAttackBoss rspAttackBoss = 1029;
 }
 
 //=================Э���=================//
@@ -92,6 +94,7 @@ enum CMD {
   GenerateProp = 1011;
   GetProp = 1012;
   BossAction = 1013;
+  AttackBoss = 1014;
 }
 
 //=================����ֵ=================//

@@ -79,6 +79,9 @@ public partial class ReqPlayerBullet : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
     public int bulletType { get; set; }
 
+    [global::ProtoBuf.ProtoMember(7, IsRequired = true)]
+    public int playerIndex { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -105,6 +108,9 @@ public partial class RspPlayerBullet : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(6, IsRequired = true)]
     public int bulletType { get; set; }
+
+    [global::ProtoBuf.ProtoMember(7, IsRequired = true)]
+    public int playerIndex { get; set; }
 
 }
 

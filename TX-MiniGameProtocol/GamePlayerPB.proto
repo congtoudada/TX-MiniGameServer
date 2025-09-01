@@ -40,6 +40,7 @@ message ReqPlayerBullet  // 玩家发射子弹请求
   required float flyVelocity = 4;    // 飞行速度
   required float lifeTime = 5;       // 子弹存活时间
   required int32 bulletType = 6;     // 子弹类型
+  required int32 playerIndex = 7;    // 玩家id
 }
 
 message RspPlayerBullet
@@ -50,6 +51,7 @@ message RspPlayerBullet
   required float flyVelocity = 4;    // 飞行速度
   required float lifeTime = 5;       // 子弹存活时间
   required int32 bulletType = 6;     // 子弹类型
+  required int32 playerIndex = 7;    // 玩家id
 }
 
 // 玩家触发后坐力请求

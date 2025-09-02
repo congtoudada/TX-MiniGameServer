@@ -166,6 +166,7 @@ namespace MiniGameServer {
         private async Task DoTimer()
         {
             this.Log("NetSvc Do Timer Start.");
+    
             while (cts != null && !cts.IsCancellationRequested)
             {
                 long now = GetTimeStamp();
@@ -177,7 +178,7 @@ namespace MiniGameServer {
                         item.LastTime = now;
                     }
                 }
-                await Task.Delay(ServerConfig.EventHandleFps, cts.Token);  // 约30fps
+                await Task.Delay((int)Math.Max(0, ServerConfig.EventHandleFps - (GetTimeStamp() - now)), cts.Token);  // 约30fps
             }
         }
     }

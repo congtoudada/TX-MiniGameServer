@@ -19,6 +19,9 @@ public partial class ReqGenMonster : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
     public int genType { get; set; }
 
+    [global::ProtoBuf.ProtoMember(4)]
+    public global::System.Collections.Generic.List<NetVector3> genPos { get; } = new global::System.Collections.Generic.List<NetVector3>();
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -33,6 +36,9 @@ public partial class RspGenMonster : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
     public long mId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(3)]
+    public global::System.Collections.Generic.List<NetVector3> genPos { get; } = new global::System.Collections.Generic.List<NetVector3>();
 
 }
 
@@ -237,6 +243,7 @@ public enum MonsterNetType
     Idle = 1,
     Chase = 2,
     Shoot = 3,
+    Dash = 4,
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

@@ -7,6 +7,7 @@ enum MonsterNetType
   Idle = 1;  // 站桩
   Chase = 2;  // 追逐
   Shoot = 3;  // 射击
+  Dash = 4;  // 冲刺
 }
 
 message ReqGenMonster  // 刷怪
@@ -19,6 +20,7 @@ message ReqGenMonster  // 刷怪
 //  required NetVector3 genPos = 4;  // 生成位置
 //  required NetVector3 genRotate = 5;  // 生成旋转
   required int32 genType = 3; // 刷怪触发方式(Debug)
+  repeated NetVector3 genPos = 4;  // 生成位置
 }
 
 message RspGenMonster
@@ -29,6 +31,7 @@ message RspGenMonster
 //  required NetVector3 genPos = 4;  // 生成位置
 //  required NetVector3 genRotate = 5;  // 生成旋转
   required int64 mId = 2; // 怪物id(第一只)
+  repeated NetVector3 genPos = 3;  // 生成位置
 }
 
 message ReqAttackMonster  // 打怪

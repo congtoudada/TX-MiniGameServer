@@ -69,6 +69,7 @@ namespace MiniGameServer
                     }
                 }
             };
+            pkg.Body.rspGenMonster.genPos.AddRange(req.genPos);
             room.Broadcast(pkg);
         }
         #endregion

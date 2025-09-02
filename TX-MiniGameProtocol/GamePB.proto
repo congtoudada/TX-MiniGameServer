@@ -1,4 +1,4 @@
-syntax = "proto2";
+﻿syntax = "proto2";
 
 import "GamePlayPB.proto";
 import "GameSystemPB.proto";

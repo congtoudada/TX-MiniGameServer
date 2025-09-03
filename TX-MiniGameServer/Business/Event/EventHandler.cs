@@ -59,40 +59,40 @@ namespace MiniGameServer
             }
         }
 
-        [EventMessage(ServerConfig.BroadcastStatusFrequency)]
-        public static void BroadcastPlayerStatus()
-        {
-            foreach (var room in RoomSvc.Instance.Rooms.Values)
-            {
-                if (room.RoomState != RoomState.Game)
-                    continue;
-                Pkg pkg = new Pkg()
-                {
-                    Head = new Head()
-                    {
-                        Uid = room.GetOwnerUid(),
-                        Cmd = Cmd.PlayerTick,
-                        Result = Result.Success
-                    },
-                    Body = new Body()
-                    {
-                        rspPlayerTick = new RspPlayerTick()
-                    }
-                };
-                List<RspPlayerTickItem> itemList = new List<RspPlayerTickItem>();
-                foreach (var player in room.Players.Values)
-                {
-                    itemList.Add(new RspPlayerTickItem()
-                    {
-                        Uid = player.SysData.Uid,
-                        Position = MsgHandler.VtoNetV(player.Position),
-                        Rotation = MsgHandler.VtoNetV(player.Rotation),
-                        Raftposition = MsgHandler.VtoNetV(player.RaftPosition),
-                    });
-                }
-                pkg.Body.rspPlayerTick.itemLists.AddRange(itemList);
-                room.Broadcast(pkg);
-            }
-        }
+        // [EventMessage(ServerConfig.BroadcastStatusFrequency)]
+        // public static void BroadcastPlayerStatus()
+        // {
+        //     foreach (var room in RoomSvc.Instance.Rooms.Values)
+        //     {
+        //         if (room.RoomState != RoomState.Game)
+        //             continue;
+        //         Pkg pkg = new Pkg()
+        //         {
+        //             Head = new Head()
+        //             {
+        //                 Uid = room.GetOwnerUid(),
+        //                 Cmd = Cmd.PlayerTick,
+        //                 Result = Result.Success
+        //             },
+        //             Body = new Body()
+        //             {
+        //                 rspPlayerTick = new RspPlayerTick()
+        //             }
+        //         };
+        //         List<RspPlayerTickItem> itemList = new List<RspPlayerTickItem>();
+        //         foreach (var player in room.Players.Values)
+        //         {
+        //             itemList.Add(new RspPlayerTickItem()
+        //             {
+        //                 Uid = player.SysData.Uid,
+        //                 Position = MsgHandler.VtoNetV(player.Position),
+        //                 Rotation = MsgHandler.VtoNetV(player.Rotation),
+        //                 Raftposition = MsgHandler.VtoNetV(player.RaftPosition),
+        //             });
+        //         }
+        //         pkg.Body.rspPlayerTick.itemLists.AddRange(itemList);
+        //         room.Broadcast(pkg);
+        //     }
+        // }
     }
 }

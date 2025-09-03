@@ -38,6 +38,7 @@ namespace MiniGameServer
         public int RoomId;
         public long MId = 0;
         public int PropId = 0;
+        public long SeqId = 0;
 
         public Room(int roomId)
         {

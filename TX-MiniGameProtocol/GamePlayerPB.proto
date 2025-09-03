@@ -14,8 +14,8 @@ import "GamePlayPB.proto";
 message ReqPlayerTick  // 局内玩家同步
 {
   required NetVector3 position = 1;
-  required NetVector3 rotation = 2;
-  required NetVector3 raftposition = 3;
+//  required NetVector3 rotation = 2;
+  required NetVector3 raftposition = 2;
   // 开火...
 }
 
@@ -23,13 +23,13 @@ message RspPlayerTickItem
 {
   required int64 uid = 1;
   required NetVector3 position = 2;
-  required NetVector3 rotation = 3;
-  required NetVector3 raftposition = 4;
+//  required NetVector3 rotation = 3;
 }
 
 message RspPlayerTick
 {
-  repeated RspPlayerTickItem itemList = 1; 
+  repeated RspPlayerTickItem itemList = 1;
+  required NetVector3 raftposition = 2;
 }
 
 message ReqPlayerBullet  // 玩家发射子弹请求

@@ -13,10 +13,7 @@ public partial class ReqPlayerTick : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(1, Name = @"position", IsRequired = true)]
     public NetVector3 Position { get; set; }
 
-    [global::ProtoBuf.ProtoMember(2, Name = @"rotation", IsRequired = true)]
-    public NetVector3 Rotation { get; set; }
-
-    [global::ProtoBuf.ProtoMember(3, Name = @"raftposition", IsRequired = true)]
+    [global::ProtoBuf.ProtoMember(2, Name = @"raftposition", IsRequired = true)]
     public NetVector3 Raftposition { get; set; }
 
 }
@@ -34,12 +31,6 @@ public partial class RspPlayerTickItem : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(2, Name = @"position", IsRequired = true)]
     public NetVector3 Position { get; set; }
 
-    [global::ProtoBuf.ProtoMember(3, Name = @"rotation", IsRequired = true)]
-    public NetVector3 Rotation { get; set; }
-
-    [global::ProtoBuf.ProtoMember(4, Name = @"raftposition", IsRequired = true)]
-    public NetVector3 Raftposition { get; set; }
-
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -51,6 +42,9 @@ public partial class RspPlayerTick : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(1, Name = @"itemList")]
     public global::System.Collections.Generic.List<RspPlayerTickItem> itemLists { get; } = new global::System.Collections.Generic.List<RspPlayerTickItem>();
+
+    [global::ProtoBuf.ProtoMember(2, Name = @"raftposition", IsRequired = true)]
+    public NetVector3 Raftposition { get; set; }
 
 }
 

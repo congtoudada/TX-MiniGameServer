@@ -6,6 +6,7 @@
   功能：
 *****************************************************/
 
+using System.Collections.Generic;
 using MiniGameServer;
 
 namespace MiniGameServer
@@ -25,7 +26,39 @@ namespace MiniGameServer
             data.Position = NetVtoV(req.Position);
             // data.Rotation = NetVtoV(req.Rotation);
             data.RaftPosition = NetVtoV(req.Raftposition);
-            // 广播(写EventHandler，定时自动广播)
+            // 广播(写EventHandler，定时自动广播) [弃用]
+            // 房主包立刻广播，其他包不做处理
+            if (room.GetOwnerUid() == uid)
+            {
+                Pkg pkg = new Pkg()
+                {
+                    Head = new Head()
+                    {
+                        Uid = room.GetOwnerUid(),
+                        Cmd = Cmd.PlayerTick,
+                        Seq = room.SeqId++,
+                        Result = Result.Success
+                    },
+                    Body = new Body()
+                    {
+                        rspPlayerTick = new RspPlayerTick()
+                        {
+                            Raftposition = req.Raftposition,
+                        }
+                    }
+                };
+                List<RspPlayerTickItem> itemList = new List<RspPlayerTickItem>();
+                foreach (var player in room.Players.Values)
+                {
+                    itemList.Add(new RspPlayerTickItem()
+                    {
+                        Uid = player.SysData.Uid,
+                        Position = MsgHandler.VtoNetV(player.Position),
+                    });
+                }
+                pkg.Body.rspPlayerTick.itemLists.AddRange(itemList);
+                room.Broadcast(pkg);
+            }
         }
         #endregion
         

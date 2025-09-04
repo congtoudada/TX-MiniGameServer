@@ -105,14 +105,14 @@ namespace MiniGameServer {
             base.Update();
             lock (PkgQueueLock)
             {
-                while(_msgPackQue.Count > 0) {
-                    MsgPack msg = _msgPackQue.Dequeue();
-                    HandoutMsg(msg);
-                }
-
                 if (_msgPackQue.Count > 10)
                 {
                     this.Warn("Too Many Server Msg! Please Increase Tick!");
+                }
+                
+                while(_msgPackQue.Count > 0) {
+                    MsgPack msg = _msgPackQue.Dequeue();
+                    HandoutMsg(msg);
                 }
             }
         }

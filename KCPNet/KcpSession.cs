@@ -81,7 +81,10 @@ namespace PENet {
         }
         public void CloseSession() {
             // KcpLog.Log($"Session Close! sid: {m_sid}");
-            cts.Cancel();
+            if (cts != null)
+            {
+                cts.Cancel();
+            }
             OnDisConnected();
 
             OnSessionClose?.Invoke(m_sid);

@@ -105,7 +105,7 @@ namespace MiniGameServer {
             base.Update();
             lock (PkgQueueLock)
             {
-                if(_msgPackQue.Count > 0) {
+                while(_msgPackQue.Count > 0) {
                     MsgPack msg = _msgPackQue.Dequeue();
                     HandoutMsg(msg);
                 }

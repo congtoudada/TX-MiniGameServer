@@ -11,7 +11,7 @@ namespace MiniGameServer
     public static class ServerConfig
     {
         public const int Tick = (int)(1 / 100.0f * 1000);  // 服务器Tick
-        public const int EventHandleFps = (int)(1 / 20.0f * 1000);  // 消息处理帧率 30fps
+        public const int EventHandleFps = (int)(1 / 10.0f * 1000);  // 消息处理帧率 10fps
         public const string PlayerDatabase = "CachePlayerData.json";  // 用户持久化数据
         public const int RoomMaxCount = 4;  // 房间最大人数
     

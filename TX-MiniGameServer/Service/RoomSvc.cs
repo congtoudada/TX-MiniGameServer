@@ -20,8 +20,14 @@ namespace MiniGameServer
         // 玩家进入房间
         public int EnterRoom(long uid, int roomId = 0)
         {
-            if (roomId < 0) roomId = 0;
-            if (roomId == 0)  // 由系统分配
+            if (roomId < 0)  // 创建房间
+            {
+                // 创建房间
+                RoomNum = CreateRoom(uid);
+                this.Log($"[RoomSvc] EnterRoom Success - 手动 创建房间:{RoomNum}");
+                return RoomNum;
+            }
+            else if (roomId == 0)  // 由系统随机分配
             {
                 // 找到第一个Ready的房间
                 foreach (var pair in Rooms)
@@ -34,17 +40,11 @@ namespace MiniGameServer
                         return pair.Key;
                     }
                 }
-                // 没有Ready的房间就新建
-                RoomNum = (RoomNum - 1) % Int32.MaxValue;
-                if (RoomNum == 0) RoomNum = Int32.MaxValue;
-                Room newRoom = new Room(RoomNum);
-                newRoom.OnInit();
-                Rooms.Add(RoomNum, newRoom);
-                newRoom.AddPlayer(uid);
+                RoomNum = CreateRoom(uid);
                 this.Log($"[RoomSvc] EnterRoom Success - 系统分配 创建房间:{RoomNum}");
                 return RoomNum;
             }
-            else  // 手动分配
+            else  // 加入房间
             {
                 if (Rooms.ContainsKey(roomId))
                 {
@@ -56,21 +56,27 @@ namespace MiniGameServer
                     if (Rooms[roomId].IsFull())
                     {
                         this.Warn($"[RoomSvc] EnterRoom Failed - 房间人数已满:{roomId}");
-                        return -2;
+                        return -2;  // 房间满人
                     }
                     // 正常进入房间
                     this.Log($"[RoomSvc] EnterRoom Success - 手动加入房间成功:{roomId}");
                     Rooms[roomId].AddPlayer(uid);
                     return roomId;
                 }
-                // 创建房间
-                Room newRoom = new Room(roomId);
-                newRoom.OnInit();
-                Rooms.Add(roomId, newRoom);
-                newRoom.AddPlayer(uid);
-                this.Log($"[RoomSvc] EnterRoom Success - 手动创建房间成功:{roomId}");
-                return roomId;
+                return -3;  // 房间不存在
             }
+        }
+
+        private int CreateRoom(long uid)
+        {
+            // 没有Ready的房间就新建
+            RoomNum = (RoomNum - 1) % Int32.MaxValue;
+            if (RoomNum == 0) RoomNum = Int32.MaxValue;
+            Room newRoom = new Room(RoomNum);
+            newRoom.OnInit();
+            Rooms.Add(RoomNum, newRoom);
+            newRoom.AddPlayer(uid);
+            return RoomNum;
         }
         
         // 玩家退出房间

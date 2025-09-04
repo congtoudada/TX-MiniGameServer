@@ -6,23 +6,23 @@ import "GameMonster.proto";
 import "GamePlayerPB.proto";
 import "GameBoss.proto";
 
-//=================���ݰ�=================//
+//=================数据包=================//
 message Pkg{
   required Head head = 1;
   optional Body body = 2;
 }
 
-//=================����ͷ=================//
+//=================数据头=================//
 message Head{
   required int64 uid = 1;  // uid
-  required CMD cmd = 2;  // Э���
-  required int64 seq = 3;  // ���к�
-  required Result result = 4;  // ������
+  required CMD cmd = 2;  // 协议号
+  required int64 seq = 3;  // 序列号
+  required Result result = 4;  // 错误码
 }
 
-//=================Э����=================//
+//=================协议体=================//
 message Body{
-  // ϵͳ��1��ʼ
+  // 系统从1开始
   optional ReqPing reqPing = 1;
   optional RspPing rspPing = 2;
   optional ReqJsonData reqJsonData = 3;
@@ -36,7 +36,9 @@ message Body{
   optional RspExitGame rspExitGame = 12;
   optional ReqLoadComplete reqLoadComplete = 13;
   optional RspLoadComplete rspLoadComplete = 14;
-  // �淨��1000��ʼ
+  optional ReqExitRoom reqExitRoom = 15;
+  optional RspExitRoom rspExitRoom = 16;
+  // 玩法从1000开始
   optional ReqEquip reqEquip = 1000;
   optional RspEquip rspEquip = 1001;
   optional ReqStartGame reqStartGame = 1002;
@@ -69,9 +71,9 @@ message Body{
   optional RspAttackBoss rspAttackBoss = 1029;
 }
 
-//=================Э���=================//
+//=================协议号=================//
 enum CMD {
-  //=================ϵͳ��1��ʼ=================//
+  //=================系统从1开始=================//
   Ping = 1;
   Json = 2;
   Login = 3;
@@ -79,7 +81,8 @@ enum CMD {
   Kick = 5;
   ExitGame = 6;
   LoadComplete = 7;
-  //=================�淨��1000��ʼ=================//
+  ExitRoom = 8;
+  //=================玩法从1000开始=================//
   Equip = 1000;
   StartGame = 1001;
   GenMonster = 1002;
@@ -97,14 +100,15 @@ enum CMD {
   AttackBoss = 1014;
 }
 
-//=================����ֵ=================//
+//=================返回值=================//
 enum Result {
   Success = 0;
-  //=================ϵͳ��1��ʼ=================//
-  HasBeenRegistered = 1;  // �Ѿ�ע��
-  HasOnline = 2;  // �Ѿ�����
-  RoomBusy = 3;  // ����������Ϸ��
-  RoomFull = 4;  // ��������
-  //=================�淨��1000��ʼ=================//
+  //=================系统从1开始=================//
+  HasBeenRegistered = 1;  // 已经注册
+  HasOnline = 2;  // 已经在线
+  RoomBusy = 3;  // 房间已在游戏中
+  RoomFull = 4;  // 房间满人
+  RoomNoExist = 5;  // 房间不存在
+  //=================玩法从1000开始=================//
 }
 

@@ -80,6 +80,10 @@ namespace MiniGameServer
                 {
                     code = Result.RoomFull;
                 }
+                else if (roomId == -3)
+                {
+                    code = Result.RoomNoExist;
+                }
             }
             else  // 已经处于某个房间，选择就绪
             {
@@ -189,6 +193,55 @@ namespace MiniGameServer
                         Result = Result.Success
                     },
                 };
+                room.Broadcast(pkg);
+            }
+        }
+        #endregion
+        
+        #region ExitRoom
+        [GameMessage(Cmd.ExitRoom)]
+        public static void ReqExitRoomHandle(MsgPack pack)
+        {
+            // 准备
+            long uid = pack.GetUid();
+            // var req = pack.Body.reqExitRoom;
+            // var data = RoomSvc.Instance.GetPlayer(uid);
+            Room room = RoomSvc.Instance.GetRoomByUid(uid);
+
+            if (room == null) return;
+            room.RemovePlayer(uid);
+            
+            pack.Session.SendMsg(new Pkg()
+            {
+                Head = new Head
+                {
+                    Uid = uid,
+                    Cmd = Cmd.ExitRoom,
+                    Result = Result.Success
+                },
+            });
+
+            if (room.Players.Count > 0)
+            {
+                Pkg pkg = new Pkg()
+                {
+                    Head = new Head
+                    {
+                        Uid = uid,
+                        Seq = pack.Head.Seq + 1,
+                        Cmd = Cmd.Match,
+                        Result = Result.Success
+                    },
+                    Body = new Body()
+                    {
+                        rspMatch = new RspMatch()
+                        {
+                            roomId = room.RoomId,
+                            ownerUId = room.GetOwnerUid()
+                        }
+                    }
+                };
+                pkg.Body.rspMatch.matchInfoLists.AddRange(room.GetMatchInfoList());
                 room.Broadcast(pkg);
             }
         }

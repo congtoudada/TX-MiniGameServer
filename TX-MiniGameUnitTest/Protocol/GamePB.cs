@@ -85,6 +85,12 @@ public partial class Body : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(14)]
     public RspLoadComplete rspLoadComplete { get; set; }
 
+    [global::ProtoBuf.ProtoMember(15)]
+    public ReqExitRoom reqExitRoom { get; set; }
+
+    [global::ProtoBuf.ProtoMember(16)]
+    public RspExitRoom rspExitRoom { get; set; }
+
     [global::ProtoBuf.ProtoMember(1000)]
     public ReqEquip reqEquip { get; set; }
 
@@ -187,6 +193,7 @@ public enum Cmd
     Kick = 5,
     ExitGame = 6,
     LoadComplete = 7,
+    ExitRoom = 8,
     Equip = 1000,
     StartGame = 1001,
     GenMonster = 1002,
@@ -212,6 +219,7 @@ public enum Result
     HasOnline = 2,
     RoomBusy = 3,
     RoomFull = 4,
+    RoomNoExist = 5,
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

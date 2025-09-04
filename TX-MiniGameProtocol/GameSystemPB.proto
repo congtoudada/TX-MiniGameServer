@@ -34,7 +34,7 @@ message RspLogin
 message ReqMatch // 匹配请求
 {
     required bool isReady = 1;  // 是否就绪
-    required int32 roomId = 2;  // 请求房间号 (0表示由服务器分配)
+    required int32 roomId = 2;  // 请求房间号 (0表示由服务器自动分配,-1表示创建新房间)
 }
 
 message MatchInfo
@@ -50,6 +50,16 @@ message RspMatch
     repeated MatchInfo matchInfoList = 1;  // 玩家信息
     required int32 roomId = 2;  // 房间号
     required int64 ownerUId = 3;  // 房主Uid
+}
+
+message ReqExitRoom // 退出房间
+{
+    
+}
+
+message RspExitRoom
+{
+    
 }
 
 message RspKick  // 踢下线

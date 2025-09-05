@@ -20,6 +20,16 @@ namespace MiniGameServer
         // 玩家进入房间
         public int EnterRoom(long uid, int roomId = 0)
         {
+            // 是否在其他房间，如果在则踢出
+            var playerData = CacheSvc.Instance.GetPlayerTempData(uid);
+            if (playerData != null)
+            {
+                if (Rooms.ContainsKey(playerData.RoomId))
+                {
+                    Rooms[playerData.RoomId].RemovePlayer(uid);
+                }
+            }
+            
             if (roomId < 0)  // 创建房间
             {
                 // 创建房间

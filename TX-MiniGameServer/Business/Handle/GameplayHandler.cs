@@ -171,6 +171,7 @@ namespace MiniGameServer
                     rspGetProp = new RspGetProp()
                     {
                         propId = req.propId,
+                        localIndex = req.localIndex,
                     }
                 }
             });

@@ -64,9 +64,11 @@ message ReqGetProp  // 拾取道具
 {
   required int32 propId = 1;
   required int32 propType = 2;
+  required int32 localIndex = 3;  // 本地模式下拾取人Index
 }
 
 message RspGetProp
 {
   required int32 propId = 1;
+  required int32 localIndex = 2;
 }

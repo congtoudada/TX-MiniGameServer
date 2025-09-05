@@ -124,6 +124,9 @@ public partial class ReqGetProp : global::ProtoBuf.IExtensible
     [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
     public int propType { get; set; }
 
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true)]
+    public int localIndex { get; set; }
+
 }
 
 [global::ProtoBuf.ProtoContract()]
@@ -135,6 +138,9 @@ public partial class RspGetProp : global::ProtoBuf.IExtensible
 
     [global::ProtoBuf.ProtoMember(1, IsRequired = true)]
     public int propId { get; set; }
+
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true)]
+    public int localIndex { get; set; }
 
 }
 
